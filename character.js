@@ -14,7 +14,15 @@ export class Character {
     this.isJumping = false;
   }
 
-  draw(ctx, rightPressed, leftPressed, upPressed, downPressed, spacePressed) {
+  draw(
+    ctx,
+    rightPressed,
+    leftPressed,
+    upPressed,
+    downPressed,
+    spacePressed,
+    characterImage
+  ) {
     // 캐릭터 이동
     if (rightPressed && !leftPressed && this.x < this.stageWidth - this.width) {
       this.x += this.vx;
@@ -47,16 +55,20 @@ export class Character {
       this.isJumping = false;
     }
 
-    console.log(this.isJumping);
-
     // 바닥으로 뚫지 않게
     if (this.y >= this.stageHeight - this.height) {
       this.y = this.stageHeight - this.height;
     }
 
-    ctx.fillStyle = "red";
-    ctx.beginPath();
-    ctx.rect(this.x, this.y, this.width, this.height);
-    ctx.fill();
+    ctx.setTransform(2, 0, 0, 2, 0, 0);
+    ctx.translate(this.stageWidth / 2 - this.width / 2, this.stageHeight * 0.7);
+
+    ctx.translate(-this.x, -this.y);
+    ctx.drawImage(characterImage, this.x, this.y);
+
+    // ctx.fillStyle = "red";
+    // ctx.beginPath();
+    // ctx.rect(this.x, this.y, this.width, this.height);
+    // ctx.fill();
   }
 }

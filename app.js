@@ -1,5 +1,6 @@
-import { Ball } from "./ball.js";
+import { Background } from "./background.js";
 import { Character } from "./character.js";
+import { Floor } from "./floor.js";
 
 // 화살표 키 입력 받기
 document.addEventListener("keydown", keyDownHandler, false);
@@ -40,6 +41,17 @@ function keyUpHandler(e) {
   }
 }
 
+let backgroundImage;
+let characterImage;
+
+function copyImageToCanvas() {
+  backgroundImage = new Image();
+  backgroundImage.src = "./img/test_map.jpg";
+
+  characterImage = new Image();
+  characterImage.src = "./img/test_char.png";
+}
+
 class App {
   constructor() {
     this.canvas = document.createElement("canvas");
@@ -50,13 +62,20 @@ class App {
     window.addEventListener("resize", this.resize.bind(this), false);
     this.resize();
 
-    this.ball = new Ball(this.stageWidth, this.stageHeight, 60, 5);
     this.character = new Character(
       this.stageWidth,
       this.stageHeight,
       60,
       100,
       3
+    );
+
+    this.floor = new Floor(this.stageWidth, this.stageHeight, 1000, 100);
+    this.background = new Background(
+      this.stageWidth,
+      this.stageHeight,
+      1200,
+      3000
     );
 
     window.requestAnimationFrame(this.animate.bind(this));
@@ -73,16 +92,40 @@ class App {
 
   animate(t) {
     window.requestAnimationFrame(this.animate.bind(this));
+    this.ctx.clearRect(
+      -this.stageWidth,
+      -this.stageHeight,
+      this.stageWidth * 3,
+      this.stageHeight * 3
+    );
 
-    this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
-    // this.ball.draw(this.ctx, this.stageWidth, this.stageHeight);
+    this.background.draw(
+      this.ctx,
+      rightPressed,
+      leftPressed,
+      upPressed,
+      downPressed,
+      spacePressed,
+      backgroundImage
+    );
+
+    // this.floor.draw(
+    //   this.ctx,
+    //   rightPressed,
+    //   leftPressed,
+    //   upPressed,
+    //   downPressed,
+    //   spacePressed
+    // );
+
     this.character.draw(
       this.ctx,
       rightPressed,
       leftPressed,
       upPressed,
       downPressed,
-      spacePressed
+      spacePressed,
+      characterImage
     );
 
     //testConsole
@@ -91,5 +134,6 @@ class App {
 }
 
 window.onload = () => {
+  copyImageToCanvas();
   new App();
 };
