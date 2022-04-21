@@ -24,7 +24,10 @@ export class Character {
     downPressed,
     spacePressed,
     characterImage,
-    characterImageFlipped
+    characterImageFlipped,
+    char_idle,
+    char_idle_flipped,
+    t
   ) {
     // 캐릭터 이동
     if (rightPressed && !leftPressed && this.x < this.stageWidth - this.width) {
@@ -76,14 +79,11 @@ export class Character {
     ctx.translate(-this.x, -this.y);
 
     ctx.drawImage(
-      this.flipY ? characterImageFlipped : characterImage,
-      this.x - characterImage.width / 2,
+      !this.flipY
+        ? char_idle[parseInt((t / 700) % 4)]
+        : char_idle_flipped[parseInt((t / 700) % 4)],
+      this.x - char_idle[parseInt((t / 1000) % 4)].width / 2,
       this.y
     );
-
-    // ctx.fillStyle = "red";
-    // ctx.beginPath();
-    // ctx.rect(this.x, this.y, this.width, this.height);
-    // ctx.fill();
   }
 }

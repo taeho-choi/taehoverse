@@ -44,16 +44,27 @@ function keyUpHandler(e) {
 let backgroundImage;
 let characterImage;
 let characterImageFlipped;
+let char_idle;
+let char_idle_flipped;
 
 function copyImageToCanvas() {
   backgroundImage = new Image();
   backgroundImage.src = "./img/test_map.jpg";
 
-  characterImage = new Image();
-  characterImage.src = "./img/test_char.png";
+  char_idle_flipped = new Array();
+  for (let i = 0; i < 4; i++) {
+    char_idle_flipped[i] = new Image();
+    char_idle_flipped[i].src =
+      "./img/idle/char_idle_flipped" + (i + 1) + ".png";
+  }
 
-  characterImageFlipped = new Image();
-  characterImageFlipped.src = "./img/test_char_flipped.png";
+  char_idle = new Array();
+  for (let i = 0; i < 4; i++) {
+    char_idle[i] = new Image();
+    char_idle[i].src = "./img/idle/char_idle" + (i + 1) + ".png";
+  }
+
+  console.log(char_idle);
 }
 
 class App {
@@ -131,7 +142,10 @@ class App {
       downPressed,
       spacePressed,
       characterImage,
-      characterImageFlipped
+      characterImageFlipped,
+      char_idle,
+      char_idle_flipped,
+      t
     );
 
     //testConsole

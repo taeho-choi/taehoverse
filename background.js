@@ -21,7 +21,7 @@ export class Background {
     ctx.drawImage(
       backgroundImage,
       this.stageWidth / 2 - backgroundImage.naturalWidth / 2,
-      330
+      320
     );
 
     // ctx.fillStyle = "yellow";
