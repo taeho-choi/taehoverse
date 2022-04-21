@@ -27,3 +27,7 @@ canvas {
 img {
   display: none;
 }
+
+#flip {
+  transform: scale(2, 2);
+}

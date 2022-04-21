@@ -43,6 +43,7 @@ function keyUpHandler(e) {
 
 let backgroundImage;
 let characterImage;
+let characterImageFlipped;
 
 function copyImageToCanvas() {
   backgroundImage = new Image();
@@ -50,6 +51,9 @@ function copyImageToCanvas() {
 
   characterImage = new Image();
   characterImage.src = "./img/test_char.png";
+
+  characterImageFlipped = new Image();
+  characterImageFlipped.src = "./img/test_char_flipped.png";
 }
 
 class App {
@@ -92,6 +96,7 @@ class App {
 
   animate(t) {
     window.requestAnimationFrame(this.animate.bind(this));
+
     this.ctx.clearRect(
       -this.stageWidth,
       -this.stageHeight,
@@ -125,7 +130,8 @@ class App {
       upPressed,
       downPressed,
       spacePressed,
-      characterImage
+      characterImage,
+      characterImageFlipped
     );
 
     //testConsole

@@ -12,6 +12,8 @@ export class Character {
 
     this.gravity = 0;
     this.isJumping = false;
+
+    this.flipY = false;
   }
 
   draw(
@@ -21,13 +23,21 @@ export class Character {
     upPressed,
     downPressed,
     spacePressed,
-    characterImage
+    characterImage,
+    characterImageFlipped
   ) {
     // 캐릭터 이동
     if (rightPressed && !leftPressed && this.x < this.stageWidth - this.width) {
       this.x += this.vx;
+      if (this.flipY) {
+        this.flipY = false;
+      }
     } else if (leftPressed && !rightPressed && this.x > 0) {
       this.x -= this.vx;
+
+      if (!this.flipY) {
+        this.flipY = true;
+      }
     }
     if (downPressed && !upPressed && this.y < this.stageHeight - this.height) {
       this.y += this.vy;
@@ -64,7 +74,12 @@ export class Character {
     ctx.translate(this.stageWidth / 2 - this.width / 2, this.stageHeight * 0.7);
 
     ctx.translate(-this.x, -this.y);
-    ctx.drawImage(characterImage, this.x, this.y);
+
+    ctx.drawImage(
+      this.flipY ? characterImageFlipped : characterImage,
+      this.x - characterImage.width / 2,
+      this.y
+    );
 
     // ctx.fillStyle = "red";
     // ctx.beginPath();
