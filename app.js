@@ -42,15 +42,22 @@ function keyUpHandler(e) {
 }
 
 let backgroundImage;
-let characterImage;
-let characterImageFlipped;
 let char_idle;
 let char_idle_flipped;
+let char_walk;
+let char_walk_flipped;
+let char_jump;
+let char_jump_flipped;
 
 function copyImageToCanvas() {
   backgroundImage = new Image();
   backgroundImage.src = "./img/test_map.jpg";
 
+  char_idle = new Array();
+  for (let i = 0; i < 4; i++) {
+    char_idle[i] = new Image();
+    char_idle[i].src = "./img/idle/char_idle" + (i + 1) + ".png";
+  }
   char_idle_flipped = new Array();
   for (let i = 0; i < 4; i++) {
     char_idle_flipped[i] = new Image();
@@ -58,13 +65,22 @@ function copyImageToCanvas() {
       "./img/idle/char_idle_flipped" + (i + 1) + ".png";
   }
 
-  char_idle = new Array();
+  char_walk = new Array();
   for (let i = 0; i < 4; i++) {
-    char_idle[i] = new Image();
-    char_idle[i].src = "./img/idle/char_idle" + (i + 1) + ".png";
+    char_walk[i] = new Image();
+    char_walk[i].src = "./img/walk/char_walk" + (i + 1) + ".png";
+  }
+  char_walk_flipped = new Array();
+  for (let i = 0; i < 4; i++) {
+    char_walk_flipped[i] = new Image();
+    char_walk_flipped[i].src =
+      "./img/walk/char_walk_flipped" + (i + 1) + ".png";
   }
 
-  console.log(char_idle);
+  char_jump = new Image();
+  char_jump.src = "./img/jump/char_jump.png";
+  char_jump_flipped = new Image();
+  char_jump_flipped.src = "./img/jump/char_jump_flipped.png";
 }
 
 class App {
@@ -82,7 +98,7 @@ class App {
       this.stageHeight,
       60,
       100,
-      3
+      2
     );
 
     this.floor = new Floor(this.stageWidth, this.stageHeight, 1000, 100);
@@ -138,13 +154,13 @@ class App {
       this.ctx,
       rightPressed,
       leftPressed,
-      upPressed,
-      downPressed,
       spacePressed,
-      characterImage,
-      characterImageFlipped,
       char_idle,
       char_idle_flipped,
+      char_walk,
+      char_walk_flipped,
+      char_jump,
+      char_jump_flipped,
       t
     );
 
