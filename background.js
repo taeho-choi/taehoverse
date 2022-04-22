@@ -18,11 +18,7 @@ export class Background {
     spacePressed,
     backgroundImage
   ) {
-    ctx.drawImage(
-      backgroundImage,
-      this.stageWidth / 2 - backgroundImage.naturalWidth / 2,
-      340
-    );
+    ctx.drawImage(backgroundImage, -this.stageWidth / 4, -this.stageHeight / 2);
 
     // ctx.fillStyle = "yellow";
     // ctx.beginPath();

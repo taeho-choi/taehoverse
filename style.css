@@ -20,8 +20,11 @@ body {
 }
 
 canvas {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 50vw;
+  background-color: red;
+  display: block;
+  margin: auto;
 }
 
 img {

@@ -93,31 +93,20 @@ class App {
     window.addEventListener("resize", this.resize.bind(this), false);
     this.resize();
 
-    this.character = new Character(
-      this.stageWidth,
-      this.stageHeight,
-      60,
-      100,
-      2
-    );
+    this.character = new Character(2000, 1000, 60, 100, 2);
 
-    this.floor = new Floor(this.stageWidth, this.stageHeight, 1000, 100);
-    this.background = new Background(
-      this.stageWidth,
-      this.stageHeight,
-      1200,
-      3000
-    );
+    this.floor = new Floor(2000, 1000, 1000, 100);
+    this.background = new Background(2000, 1000, 1200, 3000);
 
     window.requestAnimationFrame(this.animate.bind(this));
   }
 
   resize() {
-    this.stageWidth = document.body.clientWidth;
-    this.stageHeight = document.body.clientHeight;
+    this.stageWidth = 2000;
+    this.stageHeight = 1000;
 
-    this.canvas.width = this.stageWidth * 2;
-    this.canvas.height = this.stageHeight * 2;
+    this.canvas.width = 2000;
+    this.canvas.height = 1000;
     this.ctx.scale(2, 2);
   }
 

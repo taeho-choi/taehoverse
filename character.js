@@ -7,8 +7,8 @@ export class Character {
     this.stageHeight = stageHeight;
     this.stageWidth = stageWidth;
 
-    this.x = stageWidth / 2 - this.width / 2;
-    this.y = stageHeight / 2 - this.height / 2;
+    this.x = 0;
+    this.y = -200;
 
     this.gravity = 0;
     this.isJumping = false;
@@ -16,6 +16,8 @@ export class Character {
     this.flipY = false;
 
     this.status = "idle";
+
+    this.cameraPosX = 0;
   }
 
   draw(
@@ -32,13 +34,13 @@ export class Character {
     t
   ) {
     // 캐릭터 이동
-    if (rightPressed && !leftPressed && this.x < this.stageWidth - this.width) {
+    if (rightPressed && !leftPressed) {
       this.status = "walk";
       this.x += this.vx;
       if (!this.flipY) {
         this.flipY = true;
       }
-    } else if (leftPressed && !rightPressed && this.x > 0) {
+    } else if (leftPressed && !rightPressed) {
       this.status = "walk";
       this.x -= this.vx;
       if (this.flipY) {
@@ -49,7 +51,7 @@ export class Character {
     }
 
     // 중력 가속도
-    if (this.y < this.stageHeight - this.height) {
+    if (this.y < 0) {
       this.y += this.gravity;
       this.gravity += 0.6;
     } else {
@@ -60,7 +62,7 @@ export class Character {
     if (spacePressed) {
       this.isJumping = true;
     }
-    if (this.isJumping && this.y === this.stageHeight - this.height) {
+    if (this.isJumping && this.y === 0) {
       this.isJumping = false;
       this.y -= this.vy;
       this.gravity = -9;
@@ -72,14 +74,21 @@ export class Character {
     }
 
     // 바닥으로 뚫지 않게
-    if (this.y >= this.stageHeight - this.height) {
-      this.y = this.stageHeight - this.height;
+    if (this.y >= 0) {
+      this.y = 0;
     }
 
-    ctx.setTransform(3, 0, 0, 3, 0, 0);
-    ctx.translate(this.stageWidth / 2 - this.width / 2, this.stageHeight * 0.7);
+    ctx.setTransform(2, 0, 0, 2, 0, 0);
+    ctx.translate(this.stageWidth / 4, this.stageWidth / 6);
 
-    ctx.translate(-this.x - 320, -1030);
+    // 시차 카메라 이동
+
+    if (Math.abs(this.x - this.cameraPosX) > 1) {
+      console.log("X: " + this.x + "   CamX: " + this.cameraPosX);
+      this.cameraPosX += (this.x - this.cameraPosX) / 50;
+    }
+
+    ctx.translate(-this.cameraPosX, 0);
 
     if (this.status === "idle") {
       ctx.drawImage(
@@ -100,7 +109,7 @@ export class Character {
     } else if (this.status === "jump") {
       ctx.drawImage(
         !this.flipY ? char_jump : char_jump_flipped,
-        this.x - char_walk[parseInt((t / 300) % 4)].width / 2,
+        this.x - char_jump.width / 2,
         this.y
       );
     }
