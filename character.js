@@ -84,11 +84,20 @@ export class Character {
     // 시차 카메라 이동
 
     if (Math.abs(this.x - this.cameraPosX) > 1) {
-      console.log("X: " + this.x + "   CamX: " + this.cameraPosX);
+      // console.log("X: " + this.x + "   CamX: " + this.cameraPosX);
       this.cameraPosX += (this.x - this.cameraPosX) / 50;
     }
 
+    // 맵의 너비에 따라 cameraPosX 제한
+    if (this.cameraPosX < 1.01) {
+      this.cameraPosX = 1.01;
+    } else if (this.cameraPosX > 20.98) {
+      this.cameraPosX = 20.98;
+    }
+
     ctx.translate(-this.cameraPosX, 0);
+
+    console.log(this.cameraPosX);
 
     if (this.status === "idle") {
       ctx.drawImage(

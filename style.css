@@ -29,10 +29,10 @@ canvas {
   margin: auto;
 
   position: absolute;
-  top: -100%;
-  bottom: -100%;
-  left: -100%;
-  right: -100%;
+  top: -9999px;
+  bottom: -9999px;
+  left: -9999px;
+  right: -9999px;
   margin: auto;
 }
 
