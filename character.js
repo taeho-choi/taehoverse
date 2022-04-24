@@ -7,6 +7,8 @@ export class Character {
     this.stageHeight = stageHeight;
     this.stageWidth = stageWidth;
 
+    this.nickName = "최태호";
+
     this.x = 0;
     this.y = -200;
 
@@ -18,6 +20,7 @@ export class Character {
     this.status = "idle";
 
     this.cameraPosX = 0;
+    this.cameraPosY = -200;
   }
 
   draw(
@@ -79,26 +82,40 @@ export class Character {
     }
 
     ctx.setTransform(2, 0, 0, 2, 0, 0);
-    ctx.translate(this.stageWidth / 4, this.stageWidth / 6);
+    ctx.translate(this.stageWidth / 4, this.stageWidth / 7);
 
     // 시차 카메라 이동
 
     if (Math.abs(this.x - this.cameraPosX) > 1) {
       // console.log("X: " + this.x + "   CamX: " + this.cameraPosX);
-      this.cameraPosX += (this.x - this.cameraPosX) / 50;
+      this.cameraPosX += (this.x - this.cameraPosX) / 30;
+    }
+
+    if (Math.abs(this.y - this.cameraPosY) > 1) {
+      // console.log("X: " + this.x + "   CamX: " + this.cameraPosX);
+      this.cameraPosY += (this.y - this.cameraPosY) / 30;
     }
 
     // 맵의 너비에 따라 cameraPosX 제한
-    if (this.cameraPosX < 1.01) {
-      this.cameraPosX = 1.01;
-    } else if (this.cameraPosX > 20.98) {
-      this.cameraPosX = 20.98;
-    }
+    // if (this.cameraPosX < 1.01) {
+    //   this.cameraPosX = 1.01;
+    // } else if (this.cameraPosX > 20.98) {
+    //   this.cameraPosX = 20.98;
+    // }
 
-    ctx.translate(-this.cameraPosX, 0);
+    ctx.translate(-this.cameraPosX, -this.cameraPosY);
 
-    console.log(this.cameraPosX);
+    // 닉네임 그리기
+    ctx.font = "bold 14px malgun gothic";
+    ctx.fillStyle = "rgba(250, 250, 250, 1)";
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
+    ctx.lineWidth = 3.6;
+    ctx.textAlign = "center";
+    ctx.strokeText(this.nickName, this.x, this.y + 10);
+    ctx.font = "normal 14px malgun gothic";
+    ctx.fillText(this.nickName, this.x, this.y + 10);
 
+    // 캐릭터 그리기
     if (this.status === "idle") {
       ctx.drawImage(
         !this.flipY
@@ -122,5 +139,7 @@ export class Character {
         this.y
       );
     }
+
+    console.log("posX: " + this.x + "// posY: " + this.y);
   }
 }

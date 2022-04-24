@@ -1,6 +1,6 @@
 import { Background } from "./background.js";
 import { Character } from "./character.js";
-import { Floor } from "./floor.js";
+import { DefaultMap } from "./default_map.js";
 
 // 화살표 키 입력 받기
 document.addEventListener("keydown", keyDownHandler, false);
@@ -8,8 +8,6 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 let rightPressed = false;
 let leftPressed = false;
-let upPressed = false;
-let downPressed = false;
 
 let spacePressed = false;
 
@@ -48,6 +46,7 @@ let char_walk;
 let char_walk_flipped;
 let char_jump;
 let char_jump_flipped;
+let test_tile;
 
 function copyImageToCanvas() {
   backgroundImage = new Image();
@@ -81,6 +80,9 @@ function copyImageToCanvas() {
   char_jump.src = "./img/jump/char_jump.png";
   char_jump_flipped = new Image();
   char_jump_flipped.src = "./img/jump/char_jump_flipped.png";
+
+  test_tile = new Image();
+  test_tile.src = "./img/test_tile.png";
 }
 
 class App {
@@ -93,20 +95,19 @@ class App {
     window.addEventListener("resize", this.resize.bind(this), false);
     this.resize();
 
-    this.character = new Character(2000, 1000, 60, 100, 2);
-
-    this.floor = new Floor(2000, 1000, 1000, 100);
-    this.background = new Background(2000, 1000, 1200, 3000);
+    this.character = new Character(2560, 1080, 60, 100, 2);
+    this.background = new Background(2560, 1080, 1200, 3000);
+    this.default_map = new DefaultMap(2560, 1080);
 
     window.requestAnimationFrame(this.animate.bind(this));
   }
 
   resize() {
-    this.stageWidth = 2000;
-    this.stageHeight = 1000;
+    this.stageWidth = 2560;
+    this.stageHeight = 1080;
 
-    this.canvas.width = 2000;
-    this.canvas.height = 1000;
+    this.canvas.width = 2560;
+    this.canvas.height = 1080;
     this.ctx.scale(2, 2);
   }
 
@@ -119,25 +120,11 @@ class App {
       this.stageWidth * 3,
       this.stageHeight * 3
     );
+    this.ctx.beginPath();
 
-    this.background.draw(
-      this.ctx,
-      rightPressed,
-      leftPressed,
-      upPressed,
-      downPressed,
-      spacePressed,
-      backgroundImage
-    );
+    this.background.draw(this.ctx, backgroundImage);
 
-    // this.floor.draw(
-    //   this.ctx,
-    //   rightPressed,
-    //   leftPressed,
-    //   upPressed,
-    //   downPressed,
-    //   spacePressed
-    // );
+    this.default_map.draw(this.ctx, test_tile);
 
     this.character.draw(
       this.ctx,

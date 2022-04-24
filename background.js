@@ -9,20 +9,7 @@ export class Background {
     this.y = stageHeight - height;
   }
 
-  draw(
-    ctx,
-    rightPressed,
-    leftPressed,
-    upPressed,
-    downPressed,
-    spacePressed,
-    backgroundImage
-  ) {
-    ctx.drawImage(backgroundImage, -this.stageWidth / 4, -this.stageHeight / 2);
-
-    // ctx.fillStyle = "yellow";
-    // ctx.beginPath();
-    // ctx.rect(this.x, this.y, this.width, this.height);
-    // ctx.fill();
+  draw(ctx, backgroundImage) {
+    ctx.drawImage(backgroundImage, -this.stageWidth / 2, -this.stageWidth / 3);
   }
 }
