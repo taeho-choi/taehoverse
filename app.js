@@ -128,6 +128,7 @@ class App {
 
     this.character.draw(
       this.ctx,
+      this.default_map.mapData,
       rightPressed,
       leftPressed,
       spacePressed,

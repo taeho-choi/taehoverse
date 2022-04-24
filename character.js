@@ -9,22 +9,25 @@ export class Character {
 
     this.nickName = "최태호";
 
-    this.x = 0;
+    this.x = 160;
     this.y = -200;
 
-    this.gravity = 0;
+    this.gravity = 0.001;
     this.isJumping = false;
 
     this.flipY = false;
 
     this.status = "idle";
 
-    this.cameraPosX = 0;
+    this.cameraPosX = 160;
     this.cameraPosY = -200;
+
+    this.onPlatform = false;
   }
 
   draw(
     ctx,
+    mapData,
     rightPressed,
     leftPressed,
     spacePressed,
@@ -36,6 +39,8 @@ export class Character {
     char_jump_flipped,
     t
   ) {
+    this.status = "idle";
+
     // 캐릭터 이동
     if (rightPressed && !leftPressed) {
       this.status = "walk";
@@ -49,14 +54,12 @@ export class Character {
       if (this.flipY) {
         this.flipY = false;
       }
-    } else {
-      this.status = "idle";
     }
 
     // 중력 가속도
-    if (this.y < 0) {
+    if (this.gravity != 0) {
       this.y += this.gravity;
-      this.gravity += 0.6;
+      this.gravity += 0.4;
     } else {
       this.gravity = 0;
     }
@@ -64,8 +67,9 @@ export class Character {
     // 점프
     if (spacePressed) {
       this.isJumping = true;
+      this.onPlatform = false;
     }
-    if (this.isJumping && this.y === 0) {
+    if (this.isJumping && this.gravity == 0) {
       this.isJumping = false;
       this.y -= this.vy;
       this.gravity = -9;
@@ -76,13 +80,30 @@ export class Character {
       this.status = "jump";
     }
 
-    // 바닥으로 뚫지 않게
-    if (this.y >= 0) {
-      this.y = 0;
+    // 플랫폼에 서기
+    if (!this.onPlatform) {
+      if (
+        mapData[parseInt(-(this.y - 20) / 100)][parseInt(this.x / 50)] == 1 &&
+        this.y > 7 + parseInt(-(this.y - 20) / 100) * -100 &&
+        this.y < 20 + parseInt(-(this.y - 20) / 100) * -100 &&
+        this.gravity > 0
+      ) {
+        this.y = 7 + parseInt(-(this.y - 20) / 100) * -100;
+        this.gravity = 0;
+        this.onPlatform = true;
+      }
     }
+    if (this.onPlatform) {
+      if (mapData[parseInt(-(this.y - 20) / 100)][parseInt(this.x / 50)] != 1) {
+        this.gravity = 0.1;
+        this.onPlatform = false;
+      }
+    }
+    console.log(this.onPlatform);
+    console.log(parseInt(-(this.y - 14) / 100) + "   " + this.y);
 
     ctx.setTransform(2, 0, 0, 2, 0, 0);
-    ctx.translate(this.stageWidth / 4, this.stageWidth / 7);
+    ctx.translate(this.stageWidth / 4, this.stageWidth / 10);
 
     // 시차 카메라 이동
 
@@ -109,11 +130,11 @@ export class Character {
     ctx.font = "bold 14px malgun gothic";
     ctx.fillStyle = "rgba(250, 250, 250, 1)";
     ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
-    ctx.lineWidth = 3.6;
+    ctx.lineWidth = 4;
     ctx.textAlign = "center";
-    ctx.strokeText(this.nickName, this.x, this.y + 10);
+    ctx.strokeText(this.nickName, this.x, this.y + 116);
     ctx.font = "normal 14px malgun gothic";
-    ctx.fillText(this.nickName, this.x, this.y + 10);
+    ctx.fillText(this.nickName, this.x, this.y + 116);
 
     // 캐릭터 그리기
     if (this.status === "idle") {
@@ -140,6 +161,17 @@ export class Character {
       );
     }
 
-    console.log("posX: " + this.x + "// posY: " + this.y);
+    //////////////////////////
+    //     console test     //
+    //////////////////////////
+
+    // 캐릭터 포지션
+    // console.log("posX: " + this.x + " // posY: " + this.y);
+
+    // 중력
+    // console.log("gravity: " + this.gravity);
+
+    // 맵 데이터
+    // console.log("mapData: " + mapData);
   }
 }
