@@ -11,6 +11,9 @@ let leftPressed = false;
 
 let spacePressed = false;
 
+let players = [];
+let playerId;
+
 function keyDownHandler(e) {
   if (e.key == 37 || e.key == "ArrowRight" || e.key == "d") {
     rightPressed = true;
@@ -98,6 +101,7 @@ function copyImageToCanvas() {
 class App {
   constructor() {
     Login();
+    LoadPlayers();
 
     this.canvas = document.createElement("canvas");
     this.ctx = this.canvas.getContext("2d");
@@ -151,8 +155,8 @@ class App {
       char_jump,
       char_jump_flipped,
       t,
-      test_bgm,
-      test_jump
+      playerId,
+      players
     );
 
     //testConsole
@@ -176,11 +180,42 @@ function Login() {
     });
 
   firebase.auth().onAuthStateChanged((user) => {
-    console.log(user);
+    let playerRef;
+
     if (user) {
       // 로그인 됨
+      playerId = user.uid;
+      playerRef = firebase.database().ref(`players/${playerId}`);
+
+      playerRef.set({
+        id: playerId,
+        name: "Taeho",
+        x: 100,
+        y: 100,
+      });
+
+      playerRef.onDisconnect().remove();
     } else {
       // 로그아웃 됨
     }
+  });
+}
+
+function LoadPlayers() {
+  const allPlayersRef = firebase.database().ref(`players`);
+
+  // 데이터베이스 내의 값이 변경될 때마다 실행
+  allPlayersRef.on("value", (snapshot) => {
+    let snap = snapshot.val();
+    Object.keys(players).forEach((key) => {
+      players[key] = snap[key];
+    });
+  });
+
+  // 플레이어 노드가 추가될 때마다 실행
+  allPlayersRef.on("child_added", (snapshot) => {
+    const addedPlayer = snapshot.val();
+    players[addedPlayer.id] = addedPlayer;
+    // console.log(players);
   });
 }

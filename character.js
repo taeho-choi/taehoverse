@@ -38,8 +38,8 @@ export class Character {
     char_jump,
     char_jump_flipped,
     t,
-    test_bgm,
-    test_jump
+    playerId,
+    players
   ) {
     this.status = "idle";
 
@@ -48,7 +48,7 @@ export class Character {
       this.status = "walk";
       if (this.x < 1167) {
         this.x += this.vx;
-        test_bgm.play();
+        // test_bgm.play();
       }
       if (!this.flipY) {
         this.flipY = true;
@@ -77,7 +77,7 @@ export class Character {
       this.onPlatform = false;
     }
     if (this.isJumping && this.gravity == 0) {
-      test_jump.play();
+      // test_jump.play();
 
       this.isJumping = false;
       this.y -= this.vy;
@@ -167,6 +167,21 @@ export class Character {
         this.y
       );
     }
+
+    ///////// 동기화 테스트///////////////
+    const playerRef = firebase.database().ref(`players/${playerId}`);
+    playerRef.set({
+      id: playerId,
+      name: "Taeho",
+      x: this.x - char_idle[0].width / 2,
+      y: this.y,
+    });
+    /////////////////////////////////////
+
+    // 멀티플레이어 캐릭터 그리기
+    Object.keys(players).forEach((key) => {
+      ctx.drawImage(char_idle[0], players[key].x, players[key].y);
+    });
 
     //////////////////////////
     //     console test     //
