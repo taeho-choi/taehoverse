@@ -9,8 +9,8 @@ export class Character {
 
     this.nickName = "최태호";
 
-    this.x = 160;
-    this.y = -200;
+    this.x = 700;
+    this.y = -300;
 
     this.gravity = 0.001;
     this.isJumping = false;
@@ -19,8 +19,8 @@ export class Character {
 
     this.status = "idle";
 
-    this.cameraPosX = 160;
-    this.cameraPosY = -200;
+    this.cameraPosX = 700;
+    this.cameraPosY = -300;
 
     this.onPlatform = false;
   }
@@ -44,13 +44,17 @@ export class Character {
     // 캐릭터 이동
     if (rightPressed && !leftPressed) {
       this.status = "walk";
-      this.x += this.vx;
+      if (this.x < 1167) {
+        this.x += this.vx;
+      }
       if (!this.flipY) {
         this.flipY = true;
       }
     } else if (leftPressed && !rightPressed) {
       this.status = "walk";
-      this.x -= this.vx;
+      if (this.x > 0) {
+        this.x -= this.vx;
+      }
       if (this.flipY) {
         this.flipY = false;
       }
@@ -83,24 +87,22 @@ export class Character {
     // 플랫폼에 서기
     if (!this.onPlatform) {
       if (
-        mapData[parseInt(-(this.y - 20) / 100)][parseInt(this.x / 50)] == 1 &&
-        this.y > 7 + parseInt(-(this.y - 20) / 100) * -100 &&
-        this.y < 20 + parseInt(-(this.y - 20) / 100) * -100 &&
+        mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] == 1 &&
+        this.y > 8 + parseInt(-(this.y - 30) / 100) * -100 &&
+        this.y < 30 + parseInt(-(this.y - 30) / 100) * -100 &&
         this.gravity > 0
       ) {
-        this.y = 7 + parseInt(-(this.y - 20) / 100) * -100;
+        this.y = 8 + parseInt(-(this.y - 30) / 100) * -100;
         this.gravity = 0;
         this.onPlatform = true;
       }
     }
     if (this.onPlatform) {
-      if (mapData[parseInt(-(this.y - 20) / 100)][parseInt(this.x / 50)] != 1) {
+      if (mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] != 1) {
         this.gravity = 0.1;
         this.onPlatform = false;
       }
     }
-    console.log(this.onPlatform);
-    console.log(parseInt(-(this.y - 14) / 100) + "   " + this.y);
 
     ctx.setTransform(2, 0, 0, 2, 0, 0);
     ctx.translate(this.stageWidth / 4, this.stageWidth / 10);

@@ -82,7 +82,7 @@ function copyImageToCanvas() {
   char_jump_flipped.src = "./img/jump/char_jump_flipped.png";
 
   test_tile = new Image();
-  test_tile.src = "./img/test_tile.png";
+  test_tile.src = "./img/test_tile1.png";
 }
 
 class App {
@@ -95,7 +95,7 @@ class App {
     window.addEventListener("resize", this.resize.bind(this), false);
     this.resize();
 
-    this.character = new Character(2560, 1080, 60, 100, 2);
+    this.character = new Character(2560, 1080, 60, 100, 2.4);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
 

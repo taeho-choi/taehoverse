@@ -19,6 +19,8 @@ body {
 
   position: relative;
   overflow: hidden;
+
+  cursor: url(./img/cursor.gif) 8 6, auto;
 }
 
 canvas {
@@ -41,5 +43,6 @@ footer {
   z-index: 10;
   width: 100%;
   height: 80px;
-  background-color: grey;
+  background-color: white;
+  opacity: 0;
 }

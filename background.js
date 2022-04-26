@@ -10,6 +10,16 @@ export class Background {
   }
 
   draw(ctx, backgroundImage) {
-    ctx.drawImage(backgroundImage, -this.stageWidth / 2, -this.stageWidth / 3);
+    ctx.drawImage(backgroundImage, -this.stageWidth / 5, -this.stageWidth / 3);
+    ctx.drawImage(
+      backgroundImage,
+      -this.stageWidth / 5 - 1920,
+      -this.stageWidth / 3
+    );
+    ctx.drawImage(
+      backgroundImage,
+      -this.stageWidth / 5 + 1920,
+      -this.stageWidth / 3
+    );
   }
 }
