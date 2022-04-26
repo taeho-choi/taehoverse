@@ -97,6 +97,8 @@ function copyImageToCanvas() {
 
 class App {
   constructor() {
+    Login();
+
     this.canvas = document.createElement("canvas");
     this.ctx = this.canvas.getContext("2d");
 
@@ -162,3 +164,23 @@ window.onload = () => {
   copyImageToCanvas();
   new App();
 };
+
+function Login() {
+  firebase
+    .auth()
+    .signInAnonymously()
+    .catch((error) => {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
+
+  firebase.auth().onAuthStateChanged((user) => {
+    console.log(user);
+    if (user) {
+      // 로그인 됨
+    } else {
+      // 로그아웃 됨
+    }
+  });
+}

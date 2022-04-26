@@ -6,7 +6,24 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyApwWFwhWhyOhmIwtjQ98pX-eijWEoUu-8",
+        authDomain: "taehoverse.firebaseapp.com",
+        databaseURL: "https://taehoverse-default-rtdb.firebaseio.com",
+        projectId: "taehoverse",
+        storageBucket: "taehoverse.appspot.com",
+        messagingSenderId: "588479438846",
+        appId: "1:588479438846:web:e4d60282d0397ed033eaaf",
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
     <script type="module" src="app.js"></script>
+
     <footer></footer>
   </body>
 </html>
