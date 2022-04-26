@@ -47,6 +47,8 @@ let char_walk_flipped;
 let char_jump;
 let char_jump_flipped;
 let test_tile;
+let test_bgm;
+let test_jump;
 
 function copyImageToCanvas() {
   backgroundImage = new Image();
@@ -83,6 +85,14 @@ function copyImageToCanvas() {
 
   test_tile = new Image();
   test_tile.src = "./img/test_tile1.png";
+
+  test_bgm = new Audio();
+  test_bgm.src = "./audio/test_bgm.mp3";
+  test_bgm.volume = 0.2;
+
+  test_jump = new Audio();
+  test_jump.src = "./audio/test_jump.wav";
+  test_jump.volume = 0.08;
 }
 
 class App {
@@ -138,7 +148,9 @@ class App {
       char_walk_flipped,
       char_jump,
       char_jump_flipped,
-      t
+      t,
+      test_bgm,
+      test_jump
     );
 
     //testConsole

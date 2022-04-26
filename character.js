@@ -37,7 +37,9 @@ export class Character {
     char_walk_flipped,
     char_jump,
     char_jump_flipped,
-    t
+    t,
+    test_bgm,
+    test_jump
   ) {
     this.status = "idle";
 
@@ -46,6 +48,7 @@ export class Character {
       this.status = "walk";
       if (this.x < 1167) {
         this.x += this.vx;
+        test_bgm.play();
       }
       if (!this.flipY) {
         this.flipY = true;
@@ -74,6 +77,8 @@ export class Character {
       this.onPlatform = false;
     }
     if (this.isJumping && this.gravity == 0) {
+      test_jump.play();
+
       this.isJumping = false;
       this.y -= this.vy;
       this.gravity = -9;
