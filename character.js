@@ -23,6 +23,8 @@ export class Character {
     this.cameraPosY = -300;
 
     this.onPlatform = false;
+
+    this.dataChangeFlag = false;
   }
 
   draw(
@@ -144,43 +146,67 @@ export class Character {
     ctx.fillText(this.nickName, this.x, this.y + 116);
 
     // 캐릭터 그리기
-    if (this.status === "idle") {
-      ctx.drawImage(
-        !this.flipY
-          ? char_idle[parseInt((t / 500) % 4)]
-          : char_idle_flipped[parseInt((t / 500) % 4)],
-        this.x - char_idle[parseInt((t / 500) % 4)].width / 2,
-        this.y
-      );
-    } else if (this.status === "walk") {
-      ctx.drawImage(
-        !this.flipY
-          ? char_walk[parseInt((t / 300) % 4)]
-          : char_walk_flipped[parseInt((t / 300) % 4)],
-        this.x - char_walk[parseInt((t / 300) % 4)].width / 2,
-        this.y
-      );
-    } else if (this.status === "jump") {
-      ctx.drawImage(
-        !this.flipY ? char_jump : char_jump_flipped,
-        this.x - char_jump.width / 2,
-        this.y
-      );
-    }
+    // if (this.status === "idle") {
+    //   ctx.drawImage(
+    //     !this.flipY
+    //       ? char_idle[parseInt((t / 500) % 4)]
+    //       : char_idle_flipped[parseInt((t / 500) % 4)],
+    //     this.x - char_idle[parseInt((t / 500) % 4)].width / 2,
+    //     this.y
+    //   );
+    // } else if (this.status === "walk") {
+    //   ctx.drawImage(
+    //     !this.flipY
+    //       ? char_walk[parseInt((t / 300) % 4)]
+    //       : char_walk_flipped[parseInt((t / 300) % 4)],
+    //     this.x - char_walk[parseInt((t / 300) % 4)].width / 2,
+    //     this.y
+    //   );
+    // } else if (this.status === "jump") {
+    //   ctx.drawImage(
+    //     !this.flipY ? char_jump : char_jump_flipped,
+    //     this.x - char_jump.width / 2,
+    //     this.y
+    //   );
+    // }
 
-    ///////// 동기화 테스트///////////////
+    ///////// 동기화 ////////////////////
     const playerRef = firebase.database().ref(`players/${playerId}`);
     playerRef.set({
       id: playerId,
       name: "Taeho",
       x: this.x - char_idle[0].width / 2,
       y: this.y,
+      ani: this.status,
+      flipY: this.flipY,
     });
     /////////////////////////////////////
 
     // 멀티플레이어 캐릭터 그리기
     Object.keys(players).forEach((key) => {
-      ctx.drawImage(char_idle[0], players[key].x, players[key].y);
+      if (players[key].ani === "idle") {
+        ctx.drawImage(
+          !players[key].flipY
+            ? char_idle[parseInt((t / 500) % 4)]
+            : char_idle_flipped[parseInt((t / 500) % 4)],
+          players[key].x,
+          players[key].y
+        );
+      } else if (players[key].ani === "walk") {
+        ctx.drawImage(
+          !players[key].flipY
+            ? char_walk[parseInt((t / 500) % 4)]
+            : char_walk_flipped[parseInt((t / 500) % 4)],
+          players[key].x,
+          players[key].y
+        );
+      } else if (players[key].ani === "jump") {
+        ctx.drawImage(
+          !players[key].flipY ? char_jump : char_jump_flipped,
+          players[key].x,
+          players[key].y
+        );
+      }
     });
 
     //////////////////////////

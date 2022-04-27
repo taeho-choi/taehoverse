@@ -11,7 +11,7 @@ let leftPressed = false;
 
 let spacePressed = false;
 
-let players = [];
+let players = {};
 let playerId;
 
 function keyDownHandler(e) {
@@ -142,22 +142,24 @@ class App {
 
     this.default_map.draw(this.ctx, test_tile);
 
-    this.character.draw(
-      this.ctx,
-      this.default_map.mapData,
-      rightPressed,
-      leftPressed,
-      spacePressed,
-      char_idle,
-      char_idle_flipped,
-      char_walk,
-      char_walk_flipped,
-      char_jump,
-      char_jump_flipped,
-      t,
-      playerId,
-      players
-    );
+    if (playerId) {
+      this.character.draw(
+        this.ctx,
+        this.default_map.mapData,
+        rightPressed,
+        leftPressed,
+        spacePressed,
+        char_idle,
+        char_idle_flipped,
+        char_walk,
+        char_walk_flipped,
+        char_jump,
+        char_jump_flipped,
+        t,
+        playerId,
+        players
+      );
+    }
 
     //testConsole
     // console.log(`${rightPressed}${leftPressed}${upPressed}${downPressed}`);
@@ -186,12 +188,13 @@ function Login() {
       // 로그인 됨
       playerId = user.uid;
       playerRef = firebase.database().ref(`players/${playerId}`);
-
       playerRef.set({
         id: playerId,
         name: "Taeho",
         x: 100,
         y: 100,
+        ani: "idle",
+        flipY: false,
       });
 
       playerRef.onDisconnect().remove();
@@ -217,5 +220,10 @@ function LoadPlayers() {
     const addedPlayer = snapshot.val();
     players[addedPlayer.id] = addedPlayer;
     // console.log(players);
+  });
+
+  allPlayersRef.on("child_removed", (snapShot) => {
+    const removedPlayerId = snapShot.val().id;
+    delete players[removedPlayerId];
   });
 }
