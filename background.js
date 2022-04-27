@@ -9,17 +9,21 @@ export class Background {
     this.y = stageHeight - height;
   }
 
-  draw(ctx, backgroundImage) {
-    ctx.drawImage(backgroundImage, -this.stageWidth / 5, -this.stageWidth / 3);
+  draw(ctx, backgroundImage, character) {
     ctx.drawImage(
       backgroundImage,
-      -this.stageWidth / 5 - 1920,
-      -this.stageWidth / 3
+      -this.stageWidth / 5 + character.cameraPosX / 2,
+      -this.stageWidth / 3 + character.cameraPosY / 2
     );
     ctx.drawImage(
       backgroundImage,
-      -this.stageWidth / 5 + 1920,
-      -this.stageWidth / 3
+      -this.stageWidth / 5 - 1920 + character.cameraPosX / 2,
+      -this.stageWidth / 3 + character.cameraPosY / 2
+    );
+    ctx.drawImage(
+      backgroundImage,
+      -this.stageWidth / 5 + 1920 + character.cameraPosX / 2,
+      -this.stageWidth / 3 + character.cameraPosY / 2
     );
   }
 }

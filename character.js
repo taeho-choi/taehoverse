@@ -43,13 +43,13 @@ export class Character {
     playerId,
     players
   ) {
-    this.status = "idle";
-
     // 캐릭터 이동
     if (rightPressed && !leftPressed) {
       this.status = "walk";
+      this.dataChangeFlag = true;
       if (this.x < 1167) {
         this.x += this.vx;
+
         // test_bgm.play();
       }
       if (!this.flipY) {
@@ -57,6 +57,7 @@ export class Character {
       }
     } else if (leftPressed && !rightPressed) {
       this.status = "walk";
+      this.dataChangeFlag = true;
       if (this.x > 0) {
         this.x -= this.vx;
       }
@@ -68,6 +69,7 @@ export class Character {
     // 중력 가속도
     if (this.gravity != 0) {
       this.y += this.gravity;
+      this.dataChangeFlag = true;
       this.gravity += 0.4;
     } else {
       this.gravity = 0;
@@ -83,12 +85,14 @@ export class Character {
 
       this.isJumping = false;
       this.y -= this.vy;
+      this.dataChangeFlag = true;
       this.gravity = -9;
     } else {
       this.isJumping = false;
     }
     if (this.gravity !== 0) {
       this.status = "jump";
+      this.dataChangeFlag = true;
     }
 
     // 플랫폼에 서기
@@ -100,6 +104,7 @@ export class Character {
         this.gravity > 0
       ) {
         this.y = 8 + parseInt(-(this.y - 30) / 100) * -100;
+        this.dataChangeFlag = true;
         this.gravity = 0;
         this.onPlatform = true;
       }
@@ -109,6 +114,17 @@ export class Character {
         this.gravity = 0.1;
         this.onPlatform = false;
       }
+    }
+
+    // idle일 경우 idle 애니메이션으로 바꿔주기
+    if (
+      !rightPressed &&
+      !leftPressed &&
+      this.gravity === 0 &&
+      this.status !== "idle"
+    ) {
+      this.status = "idle";
+      this.dataChangeFlag = true;
     }
 
     ctx.setTransform(2, 0, 0, 2, 0, 0);
@@ -135,55 +151,25 @@ export class Character {
 
     ctx.translate(-this.cameraPosX, -this.cameraPosY);
 
-    // 닉네임 그리기
-    ctx.font = "bold 14px malgun gothic";
-    ctx.fillStyle = "rgba(250, 250, 250, 1)";
-    ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
-    ctx.lineWidth = 4;
-    ctx.textAlign = "center";
-    ctx.strokeText(this.nickName, this.x, this.y + 116);
-    ctx.font = "normal 14px malgun gothic";
-    ctx.fillText(this.nickName, this.x, this.y + 116);
+    if (this.dataChangeFlag) {
+      ///////// 동기화 ////////////////////
+      const playerRef = firebase.database().ref(`players/${playerId}`);
+      playerRef.set({
+        id: playerId,
+        name: "Taeho",
+        x: this.x - char_idle[0].width / 2,
+        y: this.y,
+        ani: this.status,
+        flipY: this.flipY,
+        chat: "",
+      });
+      /////////////////////////////////////
+      this.dataChangeFlag = false;
+    }
 
-    // 캐릭터 그리기
-    // if (this.status === "idle") {
-    //   ctx.drawImage(
-    //     !this.flipY
-    //       ? char_idle[parseInt((t / 500) % 4)]
-    //       : char_idle_flipped[parseInt((t / 500) % 4)],
-    //     this.x - char_idle[parseInt((t / 500) % 4)].width / 2,
-    //     this.y
-    //   );
-    // } else if (this.status === "walk") {
-    //   ctx.drawImage(
-    //     !this.flipY
-    //       ? char_walk[parseInt((t / 300) % 4)]
-    //       : char_walk_flipped[parseInt((t / 300) % 4)],
-    //     this.x - char_walk[parseInt((t / 300) % 4)].width / 2,
-    //     this.y
-    //   );
-    // } else if (this.status === "jump") {
-    //   ctx.drawImage(
-    //     !this.flipY ? char_jump : char_jump_flipped,
-    //     this.x - char_jump.width / 2,
-    //     this.y
-    //   );
-    // }
-
-    ///////// 동기화 ////////////////////
-    const playerRef = firebase.database().ref(`players/${playerId}`);
-    playerRef.set({
-      id: playerId,
-      name: "Taeho",
-      x: this.x - char_idle[0].width / 2,
-      y: this.y,
-      ani: this.status,
-      flipY: this.flipY,
-    });
-    /////////////////////////////////////
-
-    // 멀티플레이어 캐릭터 그리기
+    // 캐릭터들 그리기
     Object.keys(players).forEach((key) => {
+      // 캐릭터 그리기
       if (players[key].ani === "idle") {
         ctx.drawImage(
           !players[key].flipY
@@ -207,6 +193,24 @@ export class Character {
           players[key].y
         );
       }
+
+      // 닉네임 그리기
+      ctx.font = "bold 14px malgun gothic";
+      ctx.fillStyle = "rgba(250, 250, 250, 1)";
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
+      ctx.lineWidth = 4;
+      ctx.textAlign = "center";
+      ctx.strokeText(
+        players[key].name,
+        players[key].x + char_jump.width / 2,
+        players[key].y + 116
+      );
+      ctx.font = "normal 14px malgun gothic";
+      ctx.fillText(
+        players[key].name,
+        players[key].x + char_jump.width / 2,
+        players[key].y + 116
+      );
     });
 
     //////////////////////////

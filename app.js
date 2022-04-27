@@ -1,5 +1,6 @@
 import { Background } from "./background.js";
 import { Character } from "./character.js";
+import { Chat } from "./chat.js";
 import { DefaultMap } from "./default_map.js";
 
 // 화살표 키 입력 받기
@@ -14,15 +15,13 @@ let spacePressed = false;
 let players = {};
 let playerId;
 
+let chat;
+
 function keyDownHandler(e) {
   if (e.key == 37 || e.key == "ArrowRight" || e.key == "d") {
     rightPressed = true;
   } else if (e.key == 39 || e.key == "ArrowLeft" || e.key == "a") {
     leftPressed = true;
-  } else if (e.key == 38 || e.key == "ArrowUp" || e.key == "w") {
-    upPressed = true;
-  } else if (e.key == 40 || e.key == "ArrowDown" || e.key == "s") {
-    downPressed = true;
   } else if (e.key == " " || e.key == "SpaceBar") {
     spacePressed = true;
   }
@@ -33,10 +32,6 @@ function keyUpHandler(e) {
     rightPressed = false;
   } else if (e.key == 39 || e.key == "ArrowLeft" || e.key == "a") {
     leftPressed = false;
-  } else if (e.key == 38 || e.key == "ArrowUp" || e.key == "w") {
-    upPressed = false;
-  } else if (e.key == 40 || e.key == "ArrowDown" || e.key == "s") {
-    downPressed = false;
   } else if (e.key == " " || e.key == "SpaceBar") {
     spacePressed = false;
   }
@@ -111,6 +106,7 @@ class App {
     window.addEventListener("resize", this.resize.bind(this), false);
     this.resize();
 
+    chat = new Chat(playerId);
     this.character = new Character(2560, 1080, 60, 100, 2.4);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
@@ -138,7 +134,7 @@ class App {
     );
     this.ctx.beginPath();
 
-    this.background.draw(this.ctx, backgroundImage);
+    this.background.draw(this.ctx, backgroundImage, this.character);
 
     this.default_map.draw(this.ctx, test_tile);
 
@@ -190,12 +186,15 @@ function Login() {
       playerRef = firebase.database().ref(`players/${playerId}`);
       playerRef.set({
         id: playerId,
-        name: "Taeho",
+        name: "익명",
         x: 100,
         y: 100,
         ani: "idle",
         flipY: false,
+        chat: "",
       });
+
+      chat.setPlayerId(user.uid);
 
       playerRef.onDisconnect().remove();
     } else {
@@ -219,7 +218,7 @@ function LoadPlayers() {
   allPlayersRef.on("child_added", (snapshot) => {
     const addedPlayer = snapshot.val();
     players[addedPlayer.id] = addedPlayer;
-    // console.log(players);
+    console.log(players);
   });
 
   allPlayersRef.on("child_removed", (snapShot) => {
