@@ -154,14 +154,13 @@ export class Character {
     if (this.dataChangeFlag) {
       ///////// 동기화 ////////////////////
       const playerRef = firebase.database().ref(`players/${playerId}`);
-      playerRef.set({
+      playerRef.update({
         id: playerId,
         name: "Taeho",
         x: this.x - char_idle[0].width / 2,
         y: this.y,
         ani: this.status,
         flipY: this.flipY,
-        chat: "",
       });
       /////////////////////////////////////
       this.dataChangeFlag = false;
@@ -210,6 +209,24 @@ export class Character {
         players[key].name,
         players[key].x + char_jump.width / 2,
         players[key].y + 116
+      );
+
+      // 말풍선 그리기
+      ctx.font = "bold 14px malgun gothic";
+      ctx.fillStyle = "rgba(250, 250, 250, 1)";
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
+      ctx.lineWidth = 4;
+      ctx.textAlign = "center";
+      ctx.strokeText(
+        players[key].chat,
+        players[key].x + char_jump.width / 2,
+        players[key].y
+      );
+      ctx.font = "normal 14px malgun gothic";
+      ctx.fillText(
+        players[key].chat,
+        players[key].x + char_jump.width / 2,
+        players[key].y
       );
     });
 

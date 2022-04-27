@@ -33,7 +33,20 @@ function setChatInputToggle() {
 
     // 채팅 메세지 저장
     console.log(chatPlayerId);
-    const playerRef = firebase.database().ref(`players/${chatPlayerId}`);
+
+    firebase
+      .database()
+      .ref(`players/${chatPlayerId}`)
+      .update({
+        ["chat"]: chatInput.value,
+      });
+    // firebase
+    //   .database()
+    //   .ref(`players/${chatPlayerId}`)
+    //   .once("value")
+    //   .then((snapshot) => {
+    //     tempPlayer = snapshot.val().name;
+    //   });
     // playerRef.set({
     //   id: chatPlayerId,
     //   name: "익명",
@@ -44,7 +57,6 @@ function setChatInputToggle() {
     //   chat: chatInput.value,
     // });
 
-    console.log(playerRef.x);
     console.log(chatInput.value);
     chatInput.value = "";
   }
