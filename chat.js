@@ -1,63 +1,62 @@
-window.addEventListener("keydown", function (e) {
-  if (e.key == "Enter") {
-    setChatInputToggle();
-  }
-});
-
-let chatInput;
-let chatInputToggle = false;
-let chatPlayerId;
+// window.addEventListener("keydown", function (e) {
+//   if (e.key == "Enter") {
+//     setChatInputToggle();
+//   }
+// });
 
 export class Chat {
   constructor() {
-    console.log("챗 모듈 실행");
-    chatInput = document.createElement("input");
-    document.body.appendChild(chatInput);
-    chatInput.classList.add("chatInput");
+    this.chatInput = document.createElement("input");
+    document.body.appendChild(this.chatInput);
+    this.chatInput.classList.add("chatInput");
+
+    this.chatInputToggle = false;
+    this.chatPlayerId;
+
+    this.currentChat;
+
+    this.chatLog = document.getElementsByClassName("chatLogText")[0];
+    this.chatData = [];
+    this.chatLog.scrollTo(0, 99999);
   }
 
   setPlayerId(playerId) {
-    chatPlayerId = playerId;
-    console.log(chatPlayerId);
+    this.chatPlayerId = playerId;
   }
-}
 
-function setChatInputToggle() {
-  if (!chatInputToggle) {
-    chatInputToggle = true;
-    chatInput.style.display = "block";
-    chatInput.focus();
-  } else {
-    chatInputToggle = false;
-    chatInput.style.display = "none";
+  setChatInputToggle() {
+    if (!this.chatInputToggle) {
+      this.chatInputToggle = true;
+      this.chatInput.style.display = "block";
+      this.chatInput.focus();
+    } else {
+      this.chatInputToggle = false;
+      this.chatInput.style.display = "none";
 
-    // 채팅 메세지 저장
-    console.log(chatPlayerId);
+      // 채팅 메세지 저장
+      if (this.chatInput.value !== "") {
+        firebase
+          .database()
+          .ref(`players/${this.chatPlayerId}`)
+          .update({
+            ["chat"]: this.chatInput.value,
+          });
 
+        this.currentChat = this.chatInput.value;
+        this.chatLog.innerText += `\n익명: ${this.chatInput.value}`;
+        this.chatLog.scrollTo(0, 99999);
+      }
+
+      this.chatInput.value = "";
+    }
+  }
+
+  clearChatBox() {
     firebase
       .database()
-      .ref(`players/${chatPlayerId}`)
+      .ref(`players/${this.chatPlayerId}`)
       .update({
-        ["chat"]: chatInput.value,
+        ["chat"]: "",
       });
-    // firebase
-    //   .database()
-    //   .ref(`players/${chatPlayerId}`)
-    //   .once("value")
-    //   .then((snapshot) => {
-    //     tempPlayer = snapshot.val().name;
-    //   });
-    // playerRef.set({
-    //   id: chatPlayerId,
-    //   name: "익명",
-    //   x: playerRef.x,
-    //   y: playerRef.y,
-    //   ani: playerRef.ani,
-    //   flipY: playerRef.flipY,
-    //   chat: chatInput.value,
-    // });
-
-    console.log(chatInput.value);
-    chatInput.value = "";
   }
 }

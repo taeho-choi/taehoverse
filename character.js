@@ -10,7 +10,7 @@ export class Character {
     this.nickName = "최태호";
 
     this.x = 700;
-    this.y = -300;
+    this.y = -192;
 
     this.gravity = 0.001;
     this.isJumping = false;
@@ -20,7 +20,7 @@ export class Character {
     this.status = "idle";
 
     this.cameraPosX = 700;
-    this.cameraPosY = -300;
+    this.cameraPosY = -192;
 
     this.onPlatform = false;
 
@@ -67,7 +67,7 @@ export class Character {
     }
 
     // 중력 가속도
-    if (this.gravity != 0) {
+    if (this.gravity !== 0) {
       this.y += this.gravity;
       this.dataChangeFlag = true;
       this.gravity += 0.4;
@@ -148,7 +148,6 @@ export class Character {
     // } else if (this.cameraPosX > 20.98) {
     //   this.cameraPosX = 20.98;
     // }
-
     ctx.translate(-this.cameraPosX, -this.cameraPosY);
 
     if (this.dataChangeFlag) {
@@ -156,7 +155,6 @@ export class Character {
       const playerRef = firebase.database().ref(`players/${playerId}`);
       playerRef.update({
         id: playerId,
-        name: "Taeho",
         x: this.x - char_idle[0].width / 2,
         y: this.y,
         ani: this.status,
@@ -213,16 +211,16 @@ export class Character {
 
       // 말풍선 그리기
       ctx.font = "bold 14px malgun gothic";
-      ctx.fillStyle = "rgba(250, 250, 250, 1)";
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
-      ctx.lineWidth = 4;
+      ctx.strokeStyle = "rgba(250, 250, 250, 1)";
+      ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+      ctx.lineWidth = 2;
       ctx.textAlign = "center";
       ctx.strokeText(
         players[key].chat,
         players[key].x + char_jump.width / 2,
         players[key].y
       );
-      ctx.font = "normal 14px malgun gothic";
+      ctx.font = "bold 14px malgun gothic";
       ctx.fillText(
         players[key].chat,
         players[key].x + char_jump.width / 2,

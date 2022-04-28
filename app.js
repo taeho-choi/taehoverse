@@ -11,29 +11,38 @@ let rightPressed = false;
 let leftPressed = false;
 
 let spacePressed = false;
+let enterPressed = false;
 
 let players = {};
 let playerId;
 
 let chat;
+let chatBoxTimer = 0;
+
+let dataLoaded = false;
 
 function keyDownHandler(e) {
   if (e.key == 37 || e.key == "ArrowRight" || e.key == "d") {
-    rightPressed = true;
+    if (!chat.chatInputToggle) rightPressed = true;
   } else if (e.key == 39 || e.key == "ArrowLeft" || e.key == "a") {
-    leftPressed = true;
+    if (!chat.chatInputToggle) leftPressed = true;
   } else if (e.key == " " || e.key == "SpaceBar") {
-    spacePressed = true;
+    if (!chat.chatInputToggle) spacePressed = true;
+  } else if (e.key == 13 || e.key == "Enter") {
+    enterPressed = true;
+    rightPressed = false;
+    leftPressed = false;
+    spacePressed = false;
   }
 }
 
 function keyUpHandler(e) {
   if (e.key == 37 || e.key == "ArrowRight" || e.key == "d") {
-    rightPressed = false;
+    if (!chat.chatInputToggle) rightPressed = false;
   } else if (e.key == 39 || e.key == "ArrowLeft" || e.key == "a") {
-    leftPressed = false;
+    if (!chat.chatInputToggle) leftPressed = false;
   } else if (e.key == " " || e.key == "SpaceBar") {
-    spacePressed = false;
+    if (!chat.chatInputToggle) spacePressed = false;
   }
 }
 
@@ -106,7 +115,7 @@ class App {
     window.addEventListener("resize", this.resize.bind(this), false);
     this.resize();
 
-    chat = new Chat(playerId);
+    chat = new Chat();
     this.character = new Character(2560, 1080, 60, 100, 2.4);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
@@ -125,6 +134,20 @@ class App {
 
   animate(t) {
     window.requestAnimationFrame(this.animate.bind(this));
+    if (!playerId) return;
+    if (playerId && !dataLoaded) {
+      dataLoaded = true;
+      document.body.classList.add("on");
+    }
+
+    if (enterPressed) {
+      chat.setChatInputToggle();
+      enterPressed = false;
+      chatBoxTimer = t;
+    }
+    if (chat.currentChat !== "" && t - chatBoxTimer > 5000) {
+      chat.clearChatBox();
+    }
 
     this.ctx.clearRect(
       -this.stageWidth,
@@ -138,24 +161,22 @@ class App {
 
     this.default_map.draw(this.ctx, test_tile);
 
-    if (playerId) {
-      this.character.draw(
-        this.ctx,
-        this.default_map.mapData,
-        rightPressed,
-        leftPressed,
-        spacePressed,
-        char_idle,
-        char_idle_flipped,
-        char_walk,
-        char_walk_flipped,
-        char_jump,
-        char_jump_flipped,
-        t,
-        playerId,
-        players
-      );
-    }
+    this.character.draw(
+      this.ctx,
+      this.default_map.mapData,
+      rightPressed,
+      leftPressed,
+      spacePressed,
+      char_idle,
+      char_idle_flipped,
+      char_walk,
+      char_walk_flipped,
+      char_jump,
+      char_jump_flipped,
+      t,
+      playerId,
+      players
+    );
 
     //testConsole
     // console.log(`${rightPressed}${leftPressed}${upPressed}${downPressed}`);
@@ -187,8 +208,8 @@ function Login() {
       playerRef.set({
         id: playerId,
         name: "익명",
-        x: 100,
-        y: 100,
+        x: 650,
+        y: -192,
         ani: "idle",
         flipY: false,
         chat: "",
@@ -218,7 +239,6 @@ function LoadPlayers() {
   allPlayersRef.on("child_added", (snapshot) => {
     const addedPlayer = snapshot.val();
     players[addedPlayer.id] = addedPlayer;
-    console.log(players);
   });
 
   allPlayersRef.on("child_removed", (snapShot) => {
