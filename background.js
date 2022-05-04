@@ -13,17 +13,17 @@ export class Background {
     ctx.drawImage(
       backgroundImage,
       -this.stageWidth / 5 + character.cameraPosX / 2,
-      -this.stageWidth / 3 + character.cameraPosY / 2
+      -this.stageWidth / 5 + character.cameraPosY / 2
     );
     ctx.drawImage(
       backgroundImage,
       -this.stageWidth / 5 - 1920 + character.cameraPosX / 2,
-      -this.stageWidth / 3 + character.cameraPosY / 2
+      -this.stageWidth / 5 + character.cameraPosY / 2
     );
     ctx.drawImage(
       backgroundImage,
       -this.stageWidth / 5 + 1920 + character.cameraPosX / 2,
-      -this.stageWidth / 3 + character.cameraPosY / 2
+      -this.stageWidth / 5 + character.cameraPosY / 2
     );
   }
 }

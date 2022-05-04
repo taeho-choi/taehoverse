@@ -70,7 +70,7 @@ footer {
   z-index: 10;
   width: 300px;
   bottom: 24px;
-  height: 20vh;
+  height: 140px;
   background-color: rgba(200, 200, 200, 0.6);
   border: 1px solid rgba(200, 200, 200, 0.8);
   overflow-y: scroll;

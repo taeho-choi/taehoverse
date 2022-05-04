@@ -63,12 +63,14 @@ function copyImageToCanvas() {
   backgroundImage.src = "./img/test_map.jpg";
 
   char_idle = new Array();
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 2; i++) {
     char_idle[i] = new Image();
     char_idle[i].src = "./img/idle/char_idle" + (i + 1) + ".png";
+    char_idle[i].width = "40";
+    char_idle[i].height = "40";
   }
   char_idle_flipped = new Array();
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 2; i++) {
     char_idle_flipped[i] = new Image();
     char_idle_flipped[i].src =
       "./img/idle/char_idle_flipped" + (i + 1) + ".png";
@@ -117,7 +119,7 @@ class App {
     this.resize();
 
     chat = new Chat();
-    this.character = new Character(2560, 1080, 60, 100, 2.4);
+    this.character = new Character(2560, 1080, 60, 100, 2);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
 

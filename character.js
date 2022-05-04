@@ -102,10 +102,13 @@ export class Character {
 
     // 플랫폼에 서기
     if (!this.onPlatform) {
+      console.log(8 + parseInt(-(this.y - 30) / 100) * -100);
+      console.log(66 + parseInt(-(this.y - 30) / 100) * -100);
+
       if (
         mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] == 1 &&
         this.y > 8 + parseInt(-(this.y - 30) / 100) * -100 &&
-        this.y < 30 + parseInt(-(this.y - 30) / 100) * -100 &&
+        this.y < 46 + parseInt(-(this.y - 30) / 100) * -100 &&
         this.gravity > 0
       ) {
         this.y = 8 + parseInt(-(this.y - 30) / 100) * -100;
@@ -161,16 +164,16 @@ export class Character {
       if (players[key].ani === "idle") {
         ctx.drawImage(
           !players[key].flipY
-            ? char_idle[parseInt((t / 500) % 4)]
-            : char_idle_flipped[parseInt((t / 500) % 4)],
+            ? char_idle[parseInt((t / 700) % 2)]
+            : char_idle_flipped[parseInt((t / 700) % 2)],
           players[key].x,
           players[key].y
         );
       } else if (players[key].ani === "walk") {
         ctx.drawImage(
           !players[key].flipY
-            ? char_walk[parseInt((t / 500) % 4)]
-            : char_walk_flipped[parseInt((t / 500) % 4)],
+            ? char_walk[parseInt((t / 300) % 4)]
+            : char_walk_flipped[parseInt((t / 300) % 4)],
           players[key].x,
           players[key].y
         );
@@ -191,17 +194,17 @@ export class Character {
       ctx.strokeText(
         players[key].name,
         players[key].x + char_jump.width / 2,
-        players[key].y + 116
+        players[key].y + 96
       );
       ctx.font = "normal 14px malgun gothic";
       ctx.fillText(
         players[key].name,
         players[key].x + char_jump.width / 2,
-        players[key].y + 116
+        players[key].y + 96
       );
 
       // 말풍선 그리기
-      ctx.font = "bold 14px malgun gothic";
+      ctx.font = "bold 12px malgun gothic";
       ctx.strokeStyle = "rgba(250, 250, 250, 1)";
       ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
       ctx.lineWidth = 2;
@@ -211,7 +214,7 @@ export class Character {
         players[key].x + char_jump.width / 2,
         players[key].y
       );
-      ctx.font = "bold 14px malgun gothic";
+      ctx.font = "bold 12px malgun gothic";
       ctx.fillText(
         players[key].chat,
         players[key].x + char_jump.width / 2,
@@ -236,8 +239,8 @@ export class Character {
       const playerRef = firebase.database().ref(`players/${playerId}`);
       playerRef.update({
         id: playerId,
-        x: this.x - char_idle[0].width / 2,
-        y: this.y,
+        x: this.x - char_idle[0].width - 2,
+        y: this.y + 18,
         ani: this.status,
         flipY: this.flipY,
       });
@@ -255,7 +258,7 @@ export class Character {
     // 중력
     // console.log("gravity: " + this.gravity);
 
-    // 맵 데이터
+    //맵 데이터
     // console.log("mapData: " + mapData);
   }
 }
