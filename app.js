@@ -15,6 +15,7 @@ let enterPressed = false;
 
 let players = {};
 let playerId;
+let chatLog;
 
 let chat;
 let chatBoxTimer = 0;
@@ -175,7 +176,8 @@ class App {
       char_jump_flipped,
       t,
       playerId,
-      players
+      players,
+      chatLog
     );
 
     //testConsole
@@ -207,7 +209,7 @@ function Login() {
       playerRef = firebase.database().ref(`players/${playerId}`);
       playerRef.set({
         id: playerId,
-        name: "익명",
+        name: user.uid.substr(0, 5),
         x: 650,
         y: -192,
         ani: "idle",

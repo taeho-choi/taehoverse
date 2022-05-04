@@ -15,6 +15,7 @@ export class Chat {
 
     this.currentChat;
 
+    this.chatLogWrap = document.getElementsByClassName("chatLog")[0];
     this.chatLog = document.getElementsByClassName("chatLogText")[0];
     this.chatData = [];
     this.chatLog.scrollTo(0, 99999);
@@ -43,8 +44,6 @@ export class Chat {
           });
 
         this.currentChat = this.chatInput.value;
-        this.chatLog.innerText += `\n익명: ${this.chatInput.value}`;
-        this.chatLog.scrollTo(0, 99999);
       }
 
       this.chatInput.value = "";

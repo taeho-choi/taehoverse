@@ -25,6 +25,10 @@ export class Character {
     this.onPlatform = false;
 
     this.dataChangeFlag = false;
+
+    this.chatTest = {};
+    this.chatLogText = document.getElementsByClassName("chatLogText")[0];
+    this.chatLogWrap = document.getElementsByClassName("chatLog")[0];
   }
 
   draw(
@@ -41,7 +45,8 @@ export class Character {
     char_jump_flipped,
     t,
     playerId,
-    players
+    players,
+    chatLog
   ) {
     // 캐릭터 이동
     if (rightPressed && !leftPressed) {
@@ -150,20 +155,6 @@ export class Character {
     // }
     ctx.translate(-this.cameraPosX, -this.cameraPosY);
 
-    if (this.dataChangeFlag) {
-      ///////// 동기화 ////////////////////
-      const playerRef = firebase.database().ref(`players/${playerId}`);
-      playerRef.update({
-        id: playerId,
-        x: this.x - char_idle[0].width / 2,
-        y: this.y,
-        ani: this.status,
-        flipY: this.flipY,
-      });
-      /////////////////////////////////////
-      this.dataChangeFlag = false;
-    }
-
     // 캐릭터들 그리기
     Object.keys(players).forEach((key) => {
       // 캐릭터 그리기
@@ -226,7 +217,33 @@ export class Character {
         players[key].x + char_jump.width / 2,
         players[key].y
       );
+
+      if (this.chatTest[key] === undefined) {
+        this.chatTest[key] = "";
+      } else if (this.chatTest[key] !== players[key].chat) {
+        if (players[key].chat !== "") {
+          this.chatLogText.innerText += `\n${players[key].id.substr(0, 5)} : ${
+            players[key].chat
+          }`;
+          this.chatLogWrap.scrollTo(0, 99999);
+        }
+        this.chatTest[key] = players[key].chat;
+      }
     });
+
+    if (this.dataChangeFlag) {
+      ///////// 동기화 ////////////////////
+      const playerRef = firebase.database().ref(`players/${playerId}`);
+      playerRef.update({
+        id: playerId,
+        x: this.x - char_idle[0].width / 2,
+        y: this.y,
+        ani: this.status,
+        flipY: this.flipY,
+      });
+      /////////////////////////////////////
+      this.dataChangeFlag = false;
+    }
 
     //////////////////////////
     //     console test     //
