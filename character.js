@@ -7,8 +7,6 @@ export class Character {
     this.stageHeight = stageHeight;
     this.stageWidth = stageWidth;
 
-    this.nickName = "최태호";
-
     this.x = 700;
     this.y = -192;
 
@@ -102,9 +100,6 @@ export class Character {
 
     // 플랫폼에 서기
     if (!this.onPlatform) {
-      console.log(8 + parseInt(-(this.y - 30) / 100) * -100);
-      console.log(66 + parseInt(-(this.y - 30) / 100) * -100);
-
       if (
         mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] == 1 &&
         this.y > 8 + parseInt(-(this.y - 30) / 100) * -100 &&
@@ -225,9 +220,7 @@ export class Character {
         this.chatTest[key] = "";
       } else if (this.chatTest[key] !== players[key].chat) {
         if (players[key].chat !== "") {
-          this.chatLogText.innerText += `\n${players[key].id.substr(0, 5)} : ${
-            players[key].chat
-          }`;
+          this.chatLogText.innerText += `\n${players[key].name} : ${players[key].chat}`;
           this.chatLogWrap.scrollTo(0, 99999);
         }
         this.chatTest[key] = players[key].chat;

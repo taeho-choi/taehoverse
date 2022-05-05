@@ -2,6 +2,7 @@ import { Background } from "./background.js";
 import { Character } from "./character.js";
 import { Chat } from "./chat.js";
 import { DefaultMap } from "./default_map.js";
+import { Footer } from "./footer.js";
 
 // 화살표 키 입력 받기
 document.addEventListener("keydown", keyDownHandler, false);
@@ -19,6 +20,8 @@ let chatLog;
 
 let chat;
 let chatBoxTimer = 0;
+
+let footer;
 
 let dataLoaded = false;
 
@@ -119,6 +122,7 @@ class App {
     this.resize();
 
     chat = new Chat();
+    footer = new Footer();
     this.character = new Character(2560, 1080, 60, 100, 2);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
@@ -212,14 +216,15 @@ function Login() {
       playerRef.set({
         id: playerId,
         name: user.uid.substr(0, 5),
-        x: 650,
-        y: -192,
+        x: 658,
+        y: -174,
         ani: "idle",
         flipY: false,
         chat: "",
       });
 
       chat.setPlayerId(user.uid);
+      footer.changeNickname(user.uid, "임시닉네임");
 
       playerRef.onDisconnect().remove();
     } else {
