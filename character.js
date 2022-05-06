@@ -49,6 +49,7 @@ export class Character {
     char_walk_flipped,
     char_jump,
     char_jump_flipped,
+    f_key,
     t,
     playerId,
     players,
@@ -138,8 +139,8 @@ export class Character {
       this.dataChangeFlag = true;
     }
 
-    ctx.setTransform(2, 0, 0, 2, 0, 0);
-    ctx.translate(this.stageWidth / 4, this.stageWidth / 10);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.translate(this.stageWidth / 2, this.stageWidth / 5);
 
     // 시차 카메라 이동
 
@@ -189,7 +190,7 @@ export class Character {
       }
 
       // 닉네임 그리기
-      ctx.font = "bold 14px malgun gothic";
+      ctx.font = "bold 18px malgun gothic";
       ctx.fillStyle = "rgba(250, 250, 250, 1)";
       ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
       ctx.lineWidth = 4;
@@ -197,27 +198,27 @@ export class Character {
       ctx.strokeText(
         players[key].name,
         players[key].x + char_jump.width / 2,
-        players[key].y + 96
+        players[key].y + 100
       );
-      ctx.font = "normal 14px malgun gothic";
+      ctx.font = "bold 18px malgun gothic";
       ctx.fillText(
         players[key].name,
         players[key].x + char_jump.width / 2,
-        players[key].y + 96
+        players[key].y + 100
       );
 
       // 말풍선 그리기
-      ctx.font = "bold 12px malgun gothic";
-      ctx.strokeStyle = "rgba(250, 250, 250, 1)";
+      ctx.font = "bold 18px malgun gothic";
+      ctx.strokeStyle = "rgb(200, 200, 200)";
       ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 4;
       ctx.textAlign = "center";
       ctx.strokeText(
         players[key].chat,
         players[key].x + char_jump.width / 2,
         players[key].y
       );
-      ctx.font = "bold 12px malgun gothic";
+      ctx.font = "bold 18px malgun gothic";
       ctx.fillText(
         players[key].chat,
         players[key].x + char_jump.width / 2,
@@ -249,7 +250,7 @@ export class Character {
       canInteract = false;
     }
     if (canInteract) {
-      ctx.drawImage(char_jump, this.x - char_jump.width / 2, this.y);
+      ctx.drawImage(f_key, this.x - f_key.width / 2 - 1, this.y);
     }
 
     if (this.dataChangeFlag) {

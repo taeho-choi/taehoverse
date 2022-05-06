@@ -17,7 +17,6 @@ let enterPressed = false;
 
 let players = {};
 let playerId;
-let chatLog;
 
 let chat;
 let chatBoxTimer = 0;
@@ -61,6 +60,7 @@ let char_jump_flipped;
 let test_tile;
 let test_bgm;
 let test_jump;
+let f_key;
 
 function copyImageToCanvas() {
   backgroundImage = new Image();
@@ -100,6 +100,9 @@ function copyImageToCanvas() {
   test_tile = new Image();
   test_tile.src = "./img/test_tile1.png";
 
+  f_key = new Image();
+  f_key.src = "./img/f_key.png";
+
   test_bgm = new Audio();
   test_bgm.src = "./audio/test_bgm.mp3";
   test_bgm.volume = 0.2;
@@ -138,7 +141,7 @@ class App {
 
     this.canvas.width = 2560;
     this.canvas.height = 1080;
-    this.ctx.scale(2, 2);
+    this.ctx.scale(1, 1);
   }
 
   animate(t) {
@@ -187,6 +190,7 @@ class App {
       char_walk_flipped,
       char_jump,
       char_jump_flipped,
+      f_key,
       t,
       playerId,
       players,
