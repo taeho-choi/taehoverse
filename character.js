@@ -1,3 +1,11 @@
+let canInteract = false;
+
+window.addEventListener("keydown", function (e) {
+  if (e.key == "f" && canInteract) {
+    window.open("https://taeho-choi.github.io/taeho-choi-portfolio/");
+  }
+});
+
 export class Character {
   constructor(stageWidth, stageHeight, width, height, speed) {
     this.vx = speed;
@@ -44,7 +52,7 @@ export class Character {
     t,
     playerId,
     players,
-    chatLog
+    default_map
   ) {
     // 캐릭터 이동
     if (rightPressed && !leftPressed) {
@@ -101,7 +109,7 @@ export class Character {
     // 플랫폼에 서기
     if (!this.onPlatform) {
       if (
-        mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] == 1 &&
+        mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] >= 1 &&
         this.y > 8 + parseInt(-(this.y - 30) / 100) * -100 &&
         this.y < 46 + parseInt(-(this.y - 30) / 100) * -100 &&
         this.gravity > 0
@@ -113,7 +121,7 @@ export class Character {
       }
     }
     if (this.onPlatform) {
-      if (mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] != 1) {
+      if (mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] < 1) {
         this.gravity = 0.1;
         this.onPlatform = false;
       }
@@ -226,6 +234,23 @@ export class Character {
         this.chatTest[key] = players[key].chat;
       }
     });
+
+    // 상호작용 가능한 요소에 가까이 있는지 판단
+    if (
+      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] >= 2 &&
+      !canInteract
+    ) {
+      canInteract = true;
+    }
+    if (
+      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] < 2 &&
+      canInteract
+    ) {
+      canInteract = false;
+    }
+    if (canInteract) {
+      ctx.drawImage(char_jump, this.x - char_jump.width / 2, this.y);
+    }
 
     if (this.dataChangeFlag) {
       ///////// 동기화 ////////////////////

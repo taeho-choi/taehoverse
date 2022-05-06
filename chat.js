@@ -31,9 +31,6 @@ export class Chat {
       this.chatInput.style.display = "block";
       this.chatInput.focus();
     } else {
-      this.chatInputToggle = false;
-      this.chatInput.style.display = "none";
-
       // 채팅 메세지 저장
       if (this.chatInput.value !== "") {
         firebase
@@ -44,6 +41,11 @@ export class Chat {
           });
 
         this.currentChat = this.chatInput.value;
+      }
+
+      if (this.chatInput.value == "") {
+        this.chatInputToggle = false;
+        this.chatInput.style.display = "none";
       }
 
       this.chatInput.value = "";

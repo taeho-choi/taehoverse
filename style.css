@@ -52,8 +52,35 @@ footer {
   background-color: rgb(180, 180, 180);
   border-top: 1px solid rgb(10, 10, 10);
   opacity: 1;
-  padding-top: 20px;
-  padding-left: 20px;
+  padding-left: 24px;
+  color: rgb(60, 60, 60);
+}
+
+footer #footerName {
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  float: left;
+}
+
+footer #changeNicknameBtn {
+  border-radius: none;
+  border: none;
+  font-size: 8px;
+  font-weight: bold;
+  padding: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-left: 6px;
+  margin-top: 12px;
+  color: rgb(60, 60, 60);
+  background-color: rgb(200, 200, 200);
+  border-radius: 10px;
+}
+
+footer #changeNicknameBtn:hover {
+  background-color: rgb(170, 170, 170);
+  cursor: pointer;
 }
 
 .chatInput {
@@ -61,7 +88,7 @@ footer {
   position: absolute;
 
   bottom: 0;
-  width: 301px;
+  width: 300px;
   height: 23px;
   display: none;
   border: 1px solid rgb(200, 200, 200);
@@ -106,8 +133,84 @@ footer {
   bottom: 0;
 }
 
-#footerName {
+.changeNickameModal {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 40vh;
+  z-index: 30;
+  border-radius: 10px;
+  width: 200px;
+  background-color: rgb(200, 200, 200);
   font-size: 12px;
   font-weight: bold;
-  float: left;
+  text-align: center;
+  padding: 10px;
+  color: rgb(60, 60, 60);
+}
+
+.changeNickameModal input {
+  width: 190px;
+  height: 23px;
+  margin-top: 20px;
+  border: 1px solid rgb(155, 155, 155);
+  font-size: 12px;
+  padding-left: 6px;
+  font-weight: bold;
+}
+
+.changeNickameModal button {
+  width: 90px;
+  height: 23px;
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  float: right;
+  margin-right: 7px;
+  border: 1px solid rgb(155, 155, 155);
+  color: rgb(60, 60, 60);
+  background-color: rgb(200, 200, 200);
+  border-radius: 10px;
+}
+.changeNickameModal button:hover {
+  background-color: rgb(170, 170, 170);
+  cursor: pointer;
+}
+
+.infoModal {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 6vh;
+  z-index: 30;
+  border-radius: 10px;
+  width: 120vh;
+  height: 80vh;
+  background-color: rgb(200, 200, 200);
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  color: rgb(60, 60, 60);
+}
+
+.infoCancelBtn {
+  width: 100px;
+  height: 23px;
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 7px;
+  border: 1px solid rgb(155, 155, 155);
+  color: rgb(60, 60, 60);
+  background-color: rgb(200, 200, 200);
+  border-radius: 10px;
+}
+.infoCancelBtn:hover {
+  background-color: rgb(170, 170, 170);
+  cursor: pointer;
 }

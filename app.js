@@ -3,6 +3,7 @@ import { Character } from "./character.js";
 import { Chat } from "./chat.js";
 import { DefaultMap } from "./default_map.js";
 import { Footer } from "./footer.js";
+import { InfoModal } from "./info_modal.js";
 
 // 화살표 키 입력 받기
 document.addEventListener("keydown", keyDownHandler, false);
@@ -123,6 +124,7 @@ class App {
 
     chat = new Chat();
     footer = new Footer();
+    this.infoModal = new InfoModal();
     this.character = new Character(2560, 1080, 60, 100, 2);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
@@ -140,7 +142,12 @@ class App {
   }
 
   animate(t) {
-    window.requestAnimationFrame(this.animate.bind(this));
+    // 80 fps 제한
+    let thisTarget = this;
+    setTimeout(function () {
+      window.requestAnimationFrame(thisTarget.animate.bind(thisTarget));
+    }, 1000 / 80);
+
     if (!playerId) return;
     if (playerId && !dataLoaded) {
       dataLoaded = true;
@@ -183,7 +190,7 @@ class App {
       t,
       playerId,
       players,
-      chatLog
+      this.default_map
     );
 
     //testConsole
