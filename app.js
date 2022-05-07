@@ -57,10 +57,11 @@ let char_walk;
 let char_walk_flipped;
 let char_jump;
 let char_jump_flipped;
-let test_tile;
 let test_bgm;
 let test_jump;
 let f_key;
+
+let tiles;
 
 function copyImageToCanvas() {
   backgroundImage = new Image();
@@ -97,9 +98,6 @@ function copyImageToCanvas() {
   char_jump_flipped = new Image();
   char_jump_flipped.src = "./img/jump/char_jump_flipped.png";
 
-  test_tile = new Image();
-  test_tile.src = "./img/test_tile1.png";
-
   f_key = new Image();
   f_key.src = "./img/f_key.png";
 
@@ -110,6 +108,12 @@ function copyImageToCanvas() {
   test_jump = new Audio();
   test_jump.src = "./audio/test_jump.wav";
   test_jump.volume = 0.08;
+
+  tiles = new Array();
+  for (let i = 0; i < 4; i++) {
+    tiles[i] = new Image();
+    tiles[i].src = "./img/tiles/tile" + (i + 1) + ".png";
+  }
 }
 
 class App {
@@ -128,7 +132,7 @@ class App {
     chat = new Chat();
     footer = new Footer();
     this.infoModal = new InfoModal();
-    this.character = new Character(2560, 1080, 60, 100, 2);
+    this.character = new Character(2560, 1080, 60, 100, 2.8);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
 
@@ -176,7 +180,7 @@ class App {
 
     this.background.draw(this.ctx, backgroundImage, this.character);
 
-    this.default_map.draw(this.ctx, test_tile);
+    this.default_map.draw(this.ctx, tiles);
 
     this.character.draw(
       this.ctx,

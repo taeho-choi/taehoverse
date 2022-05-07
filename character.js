@@ -59,7 +59,7 @@ export class Character {
     if (rightPressed && !leftPressed) {
       this.status = "walk";
       this.dataChangeFlag = true;
-      if (this.x < 1167) {
+      if (this.x < 1592) {
         this.x += this.vx;
 
         // test_bgm.play();
@@ -110,7 +110,7 @@ export class Character {
     // 플랫폼에 서기
     if (!this.onPlatform) {
       if (
-        mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] >= 1 &&
+        mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] >= 1 &&
         this.y > 8 + parseInt(-(this.y - 30) / 100) * -100 &&
         this.y < 46 + parseInt(-(this.y - 30) / 100) * -100 &&
         this.gravity > 0
@@ -122,7 +122,7 @@ export class Character {
       }
     }
     if (this.onPlatform) {
-      if (mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] < 1) {
+      if (mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] < 1) {
         this.gravity = 0.1;
         this.onPlatform = false;
       }
@@ -140,7 +140,7 @@ export class Character {
     }
 
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.translate(this.stageWidth / 2, this.stageWidth / 5);
+    ctx.translate(this.stageWidth / 2, this.stageWidth / 4);
 
     // 시차 카메라 이동
 
@@ -190,25 +190,25 @@ export class Character {
       }
 
       // 닉네임 그리기
-      ctx.font = "bold 18px malgun gothic";
+      ctx.font = "bold 24px malgun gothic";
       ctx.fillStyle = "rgba(250, 250, 250, 1)";
       ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 7;
       ctx.textAlign = "center";
       ctx.strokeText(
         players[key].name,
         players[key].x + char_jump.width / 2,
-        players[key].y + 100
+        players[key].y + 186
       );
-      ctx.font = "bold 18px malgun gothic";
+      ctx.font = "bold 24px malgun gothic";
       ctx.fillText(
         players[key].name,
         players[key].x + char_jump.width / 2,
-        players[key].y + 100
+        players[key].y + 186
       );
 
       // 말풍선 그리기
-      ctx.font = "bold 18px malgun gothic";
+      ctx.font = "bold 24px malgun gothic";
       ctx.strokeStyle = "rgb(200, 200, 200)";
       ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
       ctx.lineWidth = 4;
@@ -218,7 +218,7 @@ export class Character {
         players[key].x + char_jump.width / 2,
         players[key].y
       );
-      ctx.font = "bold 18px malgun gothic";
+      ctx.font = "bold 24px malgun gothic";
       ctx.fillText(
         players[key].chat,
         players[key].x + char_jump.width / 2,
@@ -238,13 +238,13 @@ export class Character {
 
     // 상호작용 가능한 요소에 가까이 있는지 판단
     if (
-      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] >= 2 &&
+      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] >= 2 &&
       !canInteract
     ) {
       canInteract = true;
     }
     if (
-      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 90)] < 2 &&
+      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] < 2 &&
       canInteract
     ) {
       canInteract = false;
@@ -258,8 +258,8 @@ export class Character {
       const playerRef = firebase.database().ref(`players/${playerId}`);
       playerRef.update({
         id: playerId,
-        x: this.x - char_idle[0].width - 2,
-        y: this.y + 18,
+        x: this.x - char_idle[0].width - 36,
+        y: this.y - 58,
         ani: this.status,
         flipY: this.flipY,
       });
