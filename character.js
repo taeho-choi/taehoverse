@@ -52,14 +52,13 @@ export class Character {
     f_key,
     t,
     playerId,
-    players,
-    default_map
+    players
   ) {
     // 캐릭터 이동
     if (rightPressed && !leftPressed) {
       this.status = "walk";
       this.dataChangeFlag = true;
-      if (this.x < 1592) {
+      if (this.x < 3000) {
         this.x += this.vx;
 
         // test_bgm.play();

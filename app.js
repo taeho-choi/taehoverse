@@ -119,7 +119,6 @@ function copyImageToCanvas() {
 class App {
   constructor() {
     Login();
-    LoadPlayers();
 
     this.canvas = document.createElement("canvas");
     this.ctx = this.canvas.getContext("2d");
@@ -132,7 +131,7 @@ class App {
     chat = new Chat();
     footer = new Footer();
     this.infoModal = new InfoModal();
-    this.character = new Character(2560, 1080, 60, 100, 2.8);
+    this.character = new Character(2560, 1080, 60, 100, 3);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
 
@@ -222,9 +221,14 @@ function Login() {
     });
 
   firebase.auth().onAuthStateChanged((user) => {
+    console.log("체인지");
     let playerRef;
 
     if (user) {
+      ////////////////////////////////////////////
+      ///////           Log in             ///////
+      ////////////////////////////////////////////
+
       // 로그인 됨
       playerId = user.uid;
       playerRef = firebase.database().ref(`players/${playerId}`);
@@ -242,31 +246,33 @@ function Login() {
       footer.changeNickname(user.uid, "임시닉네임");
 
       playerRef.onDisconnect().remove();
+
+      ////////////////////////////////////////////
+      ///////       Load Players           ///////
+      ////////////////////////////////////////////
+      const allPlayersRef = firebase.database().ref(`players`);
+
+      // 데이터베이스 내의 값이 변경될 때마다 실행
+      allPlayersRef.on("value", (snapshot) => {
+        let snap = snapshot.val();
+        Object.keys(players).forEach((key) => {
+          players[key] = snap[key];
+        });
+      });
+
+      // 플레이어 노드가 추가될 때마다 실행
+      allPlayersRef.on("child_added", (snapshot) => {
+        const addedPlayer = snapshot.val();
+        players[addedPlayer.id] = addedPlayer;
+        console.log("사용자 추가");
+      });
+
+      allPlayersRef.on("child_removed", (snapShot) => {
+        const removedPlayerId = snapShot.val().id;
+        delete players[removedPlayerId];
+      });
     } else {
       // 로그아웃 됨
     }
-  });
-}
-
-function LoadPlayers() {
-  const allPlayersRef = firebase.database().ref(`players`);
-
-  // 데이터베이스 내의 값이 변경될 때마다 실행
-  allPlayersRef.on("value", (snapshot) => {
-    let snap = snapshot.val();
-    Object.keys(players).forEach((key) => {
-      players[key] = snap[key];
-    });
-  });
-
-  // 플레이어 노드가 추가될 때마다 실행
-  allPlayersRef.on("child_added", (snapshot) => {
-    const addedPlayer = snapshot.val();
-    players[addedPlayer.id] = addedPlayer;
-  });
-
-  allPlayersRef.on("child_removed", (snapShot) => {
-    const removedPlayerId = snapShot.val().id;
-    delete players[removedPlayerId];
   });
 }

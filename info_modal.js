@@ -11,8 +11,6 @@ export class InfoModal {
     this.infoCancelBtn.onclick = () => {
       this.onClickCancelInfoModal(this.infoModal);
     };
-
-    console.log(this.infoModal);
   }
 
   onClickCancelInfoModal(infoModal) {
