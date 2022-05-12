@@ -45,12 +45,12 @@ canvas {
 footer {
   position: absolute;
   z-index: 10;
-  width: 100%;
+  width: calc(100% - 319px);
   height: 40px;
   bottom: 0px;
   left: 319px;
-  background-color: rgb(180, 180, 180);
-  border-top: 1px solid rgb(10, 10, 10);
+  background-color: #dee7e8;
+  border-top: 1px solid rgb(155, 155, 155);
   opacity: 1;
   padding-left: 24px;
   color: rgb(60, 60, 60);
@@ -63,6 +63,29 @@ footer #footerName {
   float: left;
 }
 
+footer #portfolioLink {
+  font-size: 12px;
+  font-weight: bold;
+  border: 1px solid rgb(155, 155, 155);
+  color: rgb(60, 60, 60);
+  background-color: #dee7e8;
+  border-radius: 10px;
+
+  padding-right: 10px;
+  padding-left: 10px;
+
+  margin-top: 11px;
+  margin-right: 50px;
+  font-size: 12px;
+  font-weight: bold;
+  float: right;
+}
+
+footer #portfolioLink:hover {
+  background-color: #a0c2c9;
+  cursor: pointer;
+}
+
 footer #changeNicknameBtn {
   border-radius: none;
   border: none;
@@ -72,14 +95,15 @@ footer #changeNicknameBtn {
   padding-left: 4px;
   padding-right: 4px;
   margin-left: 6px;
-  margin-top: 12px;
+  margin-top: 11px;
   color: rgb(60, 60, 60);
-  background-color: rgb(200, 200, 200);
+  background-color: #dee7e8;
+  border: 1px solid rgb(155, 155, 155);
   border-radius: 10px;
 }
 
 footer #changeNicknameBtn:hover {
-  background-color: rgb(170, 170, 170);
+  background-color: #a0c2c9;
   cursor: pointer;
 }
 
@@ -104,8 +128,8 @@ footer #changeNicknameBtn:hover {
   bottom: 0px;
   height: 100px;
   background-color: rgba(200, 200, 200, 0.6);
-  border-top: 1px solid rgba(10, 10, 10, 1);
-  border-right: 1px solid rgba(10, 10, 10, 1);
+  border-top: 1px solid rgb(155, 155, 155);
+  border-right: 1px solid rgb(155, 155, 155);
   overflow-y: scroll;
   padding-right: 6px;
   padding-left: 6px;
@@ -117,14 +141,14 @@ footer #changeNicknameBtn:hover {
   width: 10px;
 }
 .chatLog::-webkit-scrollbar-thumb {
-  background-color: #5f5f5f;
+  background-color: #a0c2c9;
   border-radius: 5px;
-  border: 1px solid rgb(10, 10, 10);
+  border: 1px solid rgb(155, 155, 155);
 }
 .chatLog::-webkit-scrollbar-track {
-  background-color: rgb(221, 221, 221);
+  background-color: #dee7e8;
   border-radius: 5px;
-  border: 1px solid rgb(10, 10, 10);
+  border: 1px solid rgb(155, 155, 155);
 }
 
 .chatLog text {
@@ -143,7 +167,7 @@ footer #changeNicknameBtn:hover {
   z-index: 30;
   border-radius: 10px;
   width: 200px;
-  background-color: rgb(200, 200, 200);
+  background-color: #dee7e8;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -171,11 +195,11 @@ footer #changeNicknameBtn:hover {
   margin-right: 7px;
   border: 1px solid rgb(155, 155, 155);
   color: rgb(60, 60, 60);
-  background-color: rgb(200, 200, 200);
+  background-color: #dee7e8;
   border-radius: 10px;
 }
 .changeNickameModal button:hover {
-  background-color: rgb(170, 170, 170);
+  background-color: #a0c2c9;
   cursor: pointer;
 }
 
@@ -189,7 +213,7 @@ footer #changeNicknameBtn:hover {
   z-index: 30;
   border-radius: 10px;
   width: 460px;
-  background-color: rgb(200, 200, 200);
+  background-color: #dee7e8;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -206,10 +230,10 @@ footer #changeNicknameBtn:hover {
   font-weight: bold;
   border: 1px solid rgb(155, 155, 155);
   color: rgb(60, 60, 60);
-  background-color: rgb(200, 200, 200);
+  background-color: #dee7e8;
   border-radius: 10px;
 }
 .infoCancelBtn:hover {
-  background-color: rgb(170, 170, 170);
+  background-color: #a0c2c9;
   cursor: pointer;
 }

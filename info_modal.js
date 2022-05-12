@@ -8,7 +8,7 @@ export class InfoModal {
 
     this.infoCancelBtn = document.createElement("button");
     this.infoCancelBtn.classList.add("infoCancelBtn");
-    this.infoCancelBtn.innerText = "알겠어요!";
+    this.infoCancelBtn.innerText = "확인";
     this.infoModal.appendChild(this.infoCancelBtn);
     this.infoCancelBtn.onclick = () => {
       this.onClickCancelInfoModal(this.infoModal);

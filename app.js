@@ -130,7 +130,7 @@ class App {
 
     chat = new Chat();
     footer = new Footer();
-    // this.infoModal = new InfoModal();
+    this.infoModal = new InfoModal();
     this.character = new Character(2560, 1080, 60, 100, 3);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
@@ -238,7 +238,7 @@ function Login() {
         x: 164,
         y: -150,
         ani: "idle",
-        flipY: false,
+        flipY: true,
         chat: "",
       });
 

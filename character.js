@@ -21,7 +21,7 @@ export class Character {
     this.gravity = 0.001;
     this.isJumping = false;
 
-    this.flipY = false;
+    this.flipY = true;
 
     this.status = "idle";
 
@@ -58,7 +58,7 @@ export class Character {
     if (rightPressed && !leftPressed) {
       this.status = "walk";
       this.dataChangeFlag = true;
-      if (this.x < 3000) {
+      if (this.x < 2235) {
         this.x += this.vx;
 
         // test_bgm.play();
@@ -191,7 +191,7 @@ export class Character {
       // 닉네임 그리기
       ctx.font = "bold 24px malgun gothic";
       ctx.fillStyle = "rgba(250, 250, 250, 1)";
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
+      ctx.strokeStyle = "rgb(20, 20, 20)";
       ctx.lineWidth = 7;
       ctx.textAlign = "center";
       ctx.strokeText(

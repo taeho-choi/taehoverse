@@ -2,9 +2,15 @@ export class Footer {
   constructor() {
     this.footerName = document.getElementById("footerName");
     this.changeNicknameBtn = document.getElementById("changeNicknameBtn");
+    this.portfolioLink = document.getElementById("portfolioLink");
+
     this.changeNicknameBtn.onclick = () => {
       this.onClickChangeNickname(this.uid);
     };
+    this.portfolioLink.onclick = () => {
+      window.open("https://taeho-choi.github.io/taeho-choi-portfolio", "_self");
+    };
+
     this.changeNicknameModal;
     this.nicknameInput;
     this.submitModalBtn;
