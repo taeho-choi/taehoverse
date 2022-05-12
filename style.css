@@ -147,7 +147,7 @@ footer #changeNicknameBtn:hover {
   font-size: 12px;
   font-weight: bold;
   text-align: center;
-  padding: 10px;
+  padding: 20px;
   color: rgb(60, 60, 60);
 }
 
@@ -185,16 +185,17 @@ footer #changeNicknameBtn:hover {
   margin-right: auto;
   left: 0;
   right: 0;
-  top: 40vh;
+  top: 30vh;
   z-index: 30;
   border-radius: 10px;
-  width: 200px;
+  width: 460px;
   background-color: rgb(200, 200, 200);
   font-size: 12px;
   font-weight: bold;
   text-align: center;
-  padding: 10px;
+  padding: 20px;
   color: rgb(60, 60, 60);
+  display: block;
 }
 
 .infoCancelBtn {

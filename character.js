@@ -15,7 +15,7 @@ export class Character {
     this.stageHeight = stageHeight;
     this.stageWidth = stageWidth;
 
-    this.x = 700;
+    this.x = 240;
     this.y = -192;
 
     this.gravity = 0.001;
@@ -25,7 +25,7 @@ export class Character {
 
     this.status = "idle";
 
-    this.cameraPosX = 700;
+    this.cameraPosX = 240;
     this.cameraPosY = -192;
 
     this.onPlatform = false;
@@ -237,13 +237,13 @@ export class Character {
 
     // 상호작용 가능한 요소에 가까이 있는지 판단
     if (
-      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] >= 2 &&
+      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] >= 10 &&
       !canInteract
     ) {
       canInteract = true;
     }
     if (
-      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] < 2 &&
+      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] < 10 &&
       canInteract
     ) {
       canInteract = false;
