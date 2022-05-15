@@ -237,19 +237,19 @@ export class Character {
 
     // 상호작용 가능한 요소에 가까이 있는지 판단
     if (
-      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] >= 10 &&
+      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] == 8 &&
       !canInteract
     ) {
       canInteract = true;
     }
     if (
-      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] < 10 &&
+      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] <= 7 &&
       canInteract
     ) {
       canInteract = false;
     }
     if (canInteract) {
-      ctx.drawImage(f_key, this.x - f_key.width / 2 - 1, this.y);
+      ctx.drawImage(f_key, this.x - f_key.width / 2 - 0.5, this.y - 100);
     }
 
     if (this.dataChangeFlag) {

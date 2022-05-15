@@ -5,7 +5,7 @@ import { DefaultMap } from "./default_map.js";
 import { Footer } from "./footer.js";
 import { InfoModal } from "./info_modal.js";
 
-// 화살표 키 입력 받기
+// 키보드 입력 받기
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
@@ -60,9 +60,14 @@ let char_jump_flipped;
 let test_bgm;
 let test_jump;
 let f_key;
+let taeho;
+let notice;
 
 let tiles;
 
+////////////////////////////////////////////
+///////         Image Load           ///////
+////////////////////////////////////////////
 function copyImageToCanvas() {
   backgroundImage = new Image();
   backgroundImage.src = "./img/test_map.png";
@@ -114,6 +119,18 @@ function copyImageToCanvas() {
     tiles[i] = new Image();
     tiles[i].src = "./img/tiles/tile" + (i + 1) + ".png";
   }
+
+  taeho = new Array();
+  for (let i = 0; i < 2; i++) {
+    taeho[i] = new Image();
+    taeho[i].src = "./img/taeho/taeho" + (i + 1) + ".png";
+  }
+
+  notice = new Array();
+  for (let i = 0; i < 5; i++) {
+    notice[i] = new Image();
+    notice[i].src = "./img/notice/notice" + (i + 1) + ".png";
+  }
 }
 
 class App {
@@ -131,7 +148,7 @@ class App {
     chat = new Chat();
     footer = new Footer();
     this.infoModal = new InfoModal();
-    this.character = new Character(2560, 1080, 60, 100, 3);
+    this.character = new Character(2560, 1080, 60, 100, 4);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
 
@@ -147,6 +164,9 @@ class App {
     this.ctx.scale(1, 1);
   }
 
+  ////////////////////////////////////////////
+  ///////             Draw             ///////
+  ////////////////////////////////////////////
   animate(t) {
     // 80 fps 제한
     let thisTarget = this;
@@ -179,7 +199,7 @@ class App {
 
     this.background.draw(this.ctx, backgroundImage, this.character);
 
-    this.default_map.draw(this.ctx, tiles);
+    this.default_map.draw(this.ctx, tiles, taeho, notice, t);
 
     this.character.draw(
       this.ctx,
@@ -199,9 +219,6 @@ class App {
       players,
       this.default_map
     );
-
-    //testConsole
-    // console.log(`${rightPressed}${leftPressed}${upPressed}${downPressed}`);
   }
 }
 
@@ -221,7 +238,6 @@ function Login() {
     });
 
   firebase.auth().onAuthStateChanged((user) => {
-    console.log("체인지");
     let playerRef;
 
     if (user) {
@@ -264,7 +280,6 @@ function Login() {
       allPlayersRef.on("child_added", (snapshot) => {
         const addedPlayer = snapshot.val();
         players[addedPlayer.id] = addedPlayer;
-        console.log("사용자 추가");
       });
 
       allPlayersRef.on("child_removed", (snapShot) => {
