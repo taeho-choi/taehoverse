@@ -1,7 +1,9 @@
-let canInteract = false;
+let canInteract = 0;
 
 window.addEventListener("keydown", function (e) {
-  if (e.key == "f" && canInteract) {
+  if (e.key == "f" && canInteract == 1) {
+    window.open("https://taeho-choi.github.io/taeho-choi-portfolio/");
+  } else if (e.key == "f" && canInteract == 2) {
     window.open("https://taeho-choi.github.io/taeho-choi-portfolio/");
   }
 });
@@ -58,7 +60,7 @@ export class Character {
     if (rightPressed && !leftPressed) {
       this.status = "walk";
       this.dataChangeFlag = true;
-      if (this.x < 2235) {
+      if (this.x < 2712) {
         this.x += this.vx;
 
         // test_bgm.play();
@@ -237,18 +239,19 @@ export class Character {
 
     // 상호작용 가능한 요소에 가까이 있는지 판단
     if (
-      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] == 8 &&
-      !canInteract
+      mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] >= 8 &&
+      canInteract == 0
     ) {
-      canInteract = true;
+      canInteract =
+        mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] - 7;
     }
     if (
       mapData[parseInt(-(this.y - 30) / 100)][parseInt(this.x / 160)] <= 7 &&
-      canInteract
+      canInteract != 0
     ) {
-      canInteract = false;
+      canInteract = 0;
     }
-    if (canInteract) {
+    if (canInteract != 0) {
       ctx.drawImage(f_key, this.x - f_key.width / 2 - 0.5, this.y - 100);
     }
 

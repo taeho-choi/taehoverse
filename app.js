@@ -4,6 +4,7 @@ import { Chat } from "./chat.js";
 import { DefaultMap } from "./default_map.js";
 import { Footer } from "./footer.js";
 import { InfoModal } from "./info_modal.js";
+import { Npc } from "./npc.js";
 
 // 키보드 입력 받기
 document.addEventListener("keydown", keyDownHandler, false);
@@ -127,7 +128,7 @@ function copyImageToCanvas() {
   }
 
   notice = new Array();
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     notice[i] = new Image();
     notice[i].src = "./img/notice/notice" + (i + 1) + ".png";
   }
@@ -148,9 +149,10 @@ class App {
     chat = new Chat();
     footer = new Footer();
     this.infoModal = new InfoModal();
-    this.character = new Character(2560, 1080, 60, 100, 4);
+    this.character = new Character(2560, 1080, 60, 100, 3);
     this.background = new Background(2560, 1080, 1200, 3000);
     this.default_map = new DefaultMap(2560, 1080);
+    this.npc = new Npc();
 
     window.requestAnimationFrame(this.animate.bind(this));
   }
@@ -200,6 +202,15 @@ class App {
     this.background.draw(this.ctx, backgroundImage, this.character);
 
     this.default_map.draw(this.ctx, tiles, taeho, notice, t);
+
+    this.npc.draw(
+      this.ctx,
+      char_idle,
+      char_idle_flipped,
+      char_walk,
+      char_walk_flipped,
+      t
+    );
 
     this.character.draw(
       this.ctx,

@@ -12,18 +12,8 @@ export class Background {
   draw(ctx, backgroundImage, character) {
     ctx.drawImage(
       backgroundImage,
-      -this.stageWidth / 5 + character.cameraPosX / 2,
-      -this.stageWidth / 2.4 + character.cameraPosY / 2
-    );
-    ctx.drawImage(
-      backgroundImage,
-      -this.stageWidth / 5 - 1920 + character.cameraPosX / 2,
-      -this.stageWidth / 2.4 + character.cameraPosY / 2
-    );
-    ctx.drawImage(
-      backgroundImage,
-      -this.stageWidth / 5 + 1920 + character.cameraPosX / 2,
-      -this.stageWidth / 2.4 + character.cameraPosY / 2
+      -this.stageWidth / 2 + character.cameraPosX / 2,
+      -this.stageWidth / 2 + character.cameraPosY / 2
     );
   }
 }

@@ -10,7 +10,7 @@ export class DefaultMap {
       [6, 5, 5, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7],
       [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0],
       [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0],
-      [0, 0, 0, 9, 1, 10, 1, 11, 0, 12, 1, 13, 1, 11, 0, 0, 0],
+      [0, 0, 0, 9, 1, 10, 1, 11, 1, 12, 1, 13, 1, 14, 0, 0, 0],
       [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0],
       [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0],
       [0, 0, 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0],
@@ -52,50 +52,37 @@ export class DefaultMap {
 
           if (this.mapData[i][j] == 9) {
             ctx.drawImage(tiles[2], j * 160, -100 * i + 100);
-            ctx.strokeText("와이어헌터", j * 160 + 80, -100 * i - 50 + 186);
-            ctx.fillText("와이어헌터", j * 160 + 80, -100 * i - 50 + 186);
-            ctx.fillStyle = "rgb(150, 150, 150)";
-            ctx.strokeStyle = "rgb(70, 70, 70)";
-            ctx.strokeText("UnrealEngine", j * 160 + 80, -100 * i - 50 + 216);
-            ctx.fillText("UnrealEngine", j * 160 + 80, -100 * i - 50 + 216);
+            this.drawName(ctx, i, j, "와이어헌터", "UnrealEngine");
           } else if (this.mapData[i][j] == 10) {
             ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
-            ctx.strokeText("폴리곤자르기", j * 160 + 80, -100 * i - 50 + 186);
-            ctx.fillText("폴리곤자르기", j * 160 + 80, -100 * i - 50 + 186);
-            ctx.fillStyle = "rgb(150, 150, 150)";
-            ctx.strokeStyle = "rgb(70, 70, 70)";
-            ctx.strokeText("OpenGL", j * 160 + 80, -100 * i - 50 + 216);
-            ctx.fillText("OpenGL", j * 160 + 80, -100 * i - 50 + 216);
+            this.drawName(ctx, i, j, "폴리곤자르기", "OpenGL");
           } else if (this.mapData[i][j] == 11) {
-            ctx.drawImage(tiles[3], j * 160, -100 * i + 100);
-            ctx.strokeText("사이보그", j * 160 + 80, -100 * i - 50 + 186);
-            ctx.fillText("사이보그", j * 160 + 80, -100 * i - 50 + 186);
-            ctx.fillStyle = "rgb(150, 150, 150)";
-            ctx.strokeStyle = "rgb(70, 70, 70)";
-            ctx.strokeText("OpenGL", j * 160 + 80, -100 * i - 50 + 216);
-            ctx.fillText("OpenGL", j * 160 + 80, -100 * i - 50 + 216);
+            ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
+            this.drawName(ctx, i, j, "사이보그", "OpenGL");
           } else if (this.mapData[i][j] == 12) {
-            ctx.drawImage(tiles[2], j * 160, -100 * i + 100);
-            ctx.strokeText("444", j * 160 + 80, -100 * i - 50 + 186);
-            ctx.fillText("444", j * 160 + 80, -100 * i - 50 + 186);
-            ctx.fillStyle = "rgb(150, 150, 150)";
-            ctx.strokeStyle = "rgb(70, 70, 70)";
-            ctx.strokeText("OpenGL", j * 160 + 80, -100 * i - 50 + 216);
-            ctx.fillText("OpenGL", j * 160 + 80, -100 * i - 50 + 216);
+            ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
+            this.drawName(ctx, i, j, "444", "OpenGL");
           } else if (this.mapData[i][j] == 13) {
             ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
-            ctx.strokeText("555", j * 160 + 80, -100 * i - 50 + 186);
-            ctx.fillText("555", j * 160 + 80, -100 * i - 50 + 186);
-            ctx.fillStyle = "rgb(150, 150, 150)";
-            ctx.strokeStyle = "rgb(70, 70, 70)";
-            ctx.strokeText("OpenGL", j * 160 + 80, -100 * i - 50 + 216);
-            ctx.fillText("OpenGL", j * 160 + 80, -100 * i - 50 + 216);
+            this.drawName(ctx, i, j, "555", "OpenGL");
+          } else if (this.mapData[i][j] == 14) {
+            ctx.drawImage(tiles[3], j * 160, -100 * i + 100);
+            this.drawName(ctx, i, j, "666", "OpenGL");
           }
 
           ctx.drawImage(notice[this.mapData[i][j] - 9], j * 160, -100 * i - 50);
         }
       }
     }
+  }
+
+  drawName(ctx, i, j, name, info) {
+    ctx.strokeText(name, j * 160 + 80, -100 * i - 50 + 186);
+    ctx.fillText(name, j * 160 + 80, -100 * i - 50 + 186);
+    ctx.fillStyle = "rgb(150, 150, 150)";
+    ctx.strokeStyle = "rgb(70, 70, 70)";
+    ctx.strokeText(info, j * 160 + 80, -100 * i - 50 + 216);
+    ctx.fillText(info, j * 160 + 80, -100 * i - 50 + 216);
   }
 
   interact_2() {
