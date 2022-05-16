@@ -58,12 +58,13 @@ let char_walk;
 let char_walk_flipped;
 let char_jump;
 let char_jump_flipped;
-let test_bgm;
-let test_jump;
 let f_key;
 let taeho;
 let notice;
-
+let npc_idle;
+let npc_idle_flipped;
+let npc_walk;
+let npc_walk_flipped;
 let tiles;
 
 ////////////////////////////////////////////
@@ -107,14 +108,6 @@ function copyImageToCanvas() {
   f_key = new Image();
   f_key.src = "./img/f_key.png";
 
-  test_bgm = new Audio();
-  test_bgm.src = "./audio/test_bgm.mp3";
-  test_bgm.volume = 0.2;
-
-  test_jump = new Audio();
-  test_jump.src = "./audio/test_jump.wav";
-  test_jump.volume = 0.08;
-
   tiles = new Array();
   for (let i = 0; i < 7; i++) {
     tiles[i] = new Image();
@@ -131,6 +124,40 @@ function copyImageToCanvas() {
   for (let i = 0; i < 6; i++) {
     notice[i] = new Image();
     notice[i].src = "./img/notice/notice" + (i + 1) + ".png";
+  }
+
+  npc_idle = new Array();
+  npc_idle_flipped = new Array();
+  npc_walk = new Array();
+  npc_walk_flipped = new Array();
+  for (let i = 0; i < 3; i++) {
+    npc_idle[i] = new Array();
+    for (let j = 0; j < 2; j++) {
+      npc_idle[i][j] = new Image();
+      npc_idle[i][j].src =
+        "./img/npc/npc" + (i + 1) + "_idle" + (j + 1) + ".png";
+    }
+
+    npc_idle_flipped[i] = new Array();
+    for (let j = 0; j < 2; j++) {
+      npc_idle_flipped[i][j] = new Image();
+      npc_idle_flipped[i][j].src =
+        "./img/npc/npc" + (i + 1) + "_idle_flipped" + (j + 1) + ".png";
+    }
+
+    npc_walk[i] = new Array();
+    for (let j = 0; j < 4; j++) {
+      npc_walk[i][j] = new Image();
+      npc_walk[i][j].src =
+        "./img/npc/npc" + (i + 1) + "_walk" + (j + 1) + ".png";
+    }
+
+    npc_walk_flipped[i] = new Array();
+    for (let j = 0; j < 4; j++) {
+      npc_walk_flipped[i][j] = new Image();
+      npc_walk_flipped[i][j].src =
+        "./img/npc/npc" + (i + 1) + "_walk_flipped" + (j + 1) + ".png";
+    }
   }
 }
 
@@ -205,10 +232,10 @@ class App {
 
     this.npc.draw(
       this.ctx,
-      char_idle,
-      char_idle_flipped,
-      char_walk,
-      char_walk_flipped,
+      npc_idle,
+      npc_idle_flipped,
+      npc_walk,
+      npc_walk_flipped,
       t
     );
 

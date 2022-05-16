@@ -44,7 +44,7 @@ export class Npc {
     ];
   }
 
-  draw(ctx, char_idle, char_idle_flipped, char_walk, char_walk_flipped, t) {
+  draw(ctx, npc_idle, npc_idle_flipped, npc_walk, npc_walk_flipped, t) {
     for (let i = 0; i < this.npc.length; i++) {
       // NPC 이동 로직
       if (!this.npc[i].isIdle) {
@@ -74,13 +74,13 @@ export class Npc {
       if (this.npc[i].isIdle) {
         if (this.npc[i].vx < 0) {
           ctx.drawImage(
-            char_idle[parseInt((t / 700) % 2)],
+            npc_idle[(i + 1) % 3][parseInt((t / 700) % 2)],
             this.npc[i].x,
             this.npc[i].y
           );
         } else {
           ctx.drawImage(
-            char_idle_flipped[parseInt((t / 700) % 2)],
+            npc_idle_flipped[(i + 1) % 3][parseInt((t / 700) % 2)],
             this.npc[i].x,
             this.npc[i].y
           );
@@ -88,13 +88,13 @@ export class Npc {
       } else {
         if (this.npc[i].vx < 0) {
           ctx.drawImage(
-            char_walk[parseInt((t / 300) % 4)],
+            npc_walk[(i + 1) % 3][parseInt((t / 300) % 4)],
             this.npc[i].x,
             this.npc[i].y
           );
         } else {
           ctx.drawImage(
-            char_walk_flipped[parseInt((t / 300) % 4)],
+            npc_walk_flipped[(i + 1) % 3][parseInt((t / 300) % 4)],
             this.npc[i].x,
             this.npc[i].y
           );
