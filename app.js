@@ -176,9 +176,9 @@ class App {
     chat = new Chat();
     footer = new Footer();
     this.infoModal = new InfoModal();
-    this.character = new Character(2560, 1080, 60, 100, 3);
-    this.background = new Background(2560, 1080, 1200, 3000);
-    this.default_map = new DefaultMap(2560, 1080);
+    this.character = new Character(2560, 60, 100, 3, this.infoModal);
+    this.background = new Background(2560);
+    this.default_map = new DefaultMap();
     this.npc = new Npc();
 
     window.requestAnimationFrame(this.animate.bind(this));

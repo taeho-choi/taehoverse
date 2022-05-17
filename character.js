@@ -1,21 +1,14 @@
 let canInteract = 0;
-
-window.addEventListener("keydown", function (e) {
-  if (e.key == "f" && canInteract == 1) {
-    window.open("https://taeho-choi.github.io/taeho-choi-portfolio/");
-  } else if (e.key == "f" && canInteract == 2) {
-    window.open("https://taeho-choi.github.io/taeho-choi-portfolio/");
-  }
-});
+let infoModal;
 
 export class Character {
-  constructor(stageWidth, stageHeight, width, height, speed) {
+  constructor(stageWidth, width, height, speed, modal) {
     this.vx = speed;
     this.vy = speed;
     this.width = width;
     this.height = height;
-    this.stageHeight = stageHeight;
     this.stageWidth = stageWidth;
+    infoModal = modal;
 
     this.x = 240;
     this.y = -192;
@@ -37,6 +30,42 @@ export class Character {
     this.chatTest = {};
     this.chatLogText = document.getElementsByClassName("chatLogText")[0];
     this.chatLogWrap = document.getElementsByClassName("chatLog")[0];
+
+    window.addEventListener("keydown", function (e) {
+      if (e.key == "f" && canInteract == 1) {
+        infoModal.showInfoModal(infoModal.infoModal);
+      } else if (e.key == "f" && canInteract == 2) {
+        window.open("https://taeho-choi.github.io/taeho-choi-portfolio/");
+      } else if (e.key == "f" && canInteract == 3) {
+        window.open(
+          "https://scented-handball-29f.notion.site/EMONG-HTML-CSS-JavaScript-React-Firebase-ca486d933dac4e11b1ed97273e7d4567"
+        );
+      } else if (e.key == "f" && canInteract == 4) {
+        window.open(
+          "https://scented-handball-29f.notion.site/C-Unreal-Engine-4-dfd31d06460d44c8b36ee432dcd1b26f"
+        );
+      } else if (e.key == "f" && canInteract == 5) {
+        window.open(
+          "https://scented-handball-29f.notion.site/C-OpenGL-8520875365524dc49bf1ceb4222c01bb"
+        );
+      } else if (e.key == "f" && canInteract == 6) {
+        window.open(
+          "https://scented-handball-29f.notion.site/Following-Cyborgs-C-OpenGL-ba44dade262d4f938bd8a3bd6d3ece08"
+        );
+      } else if (e.key == "f" && canInteract == 7) {
+        window.open(
+          "https://scented-handball-29f.notion.site/Let-s-Slice-Polygon-C-OpenGL-133a1eedfd15482ea75c886068654b6e"
+        );
+      } else if (e.key == "f" && canInteract == 8) {
+        window.open("https://taeho-choi.github.io/taeho-choi-portfolio/");
+      } else if (e.key == "f" && canInteract == 9) {
+        window.open("https://github.com/taeho-choi");
+      } else if (e.key == "f" && canInteract == 10) {
+        window.open(
+          "https://scented-handball-29f.notion.site/6b963aff505d4ec7bbbe060a35569258"
+        );
+      }
+    });
   }
 
   draw(
@@ -191,7 +220,7 @@ export class Character {
       }
 
       // 닉네임 그리기
-      ctx.font = "bold 24px malgun gothic";
+      ctx.font = "bold 18px malgun gothic";
       ctx.fillStyle = "rgba(250, 250, 250, 1)";
       ctx.strokeStyle = "rgb(20, 20, 20)";
       ctx.lineWidth = 7;
@@ -201,7 +230,6 @@ export class Character {
         players[key].x + char_jump.width / 2,
         players[key].y + 186
       );
-      ctx.font = "bold 24px malgun gothic";
       ctx.fillText(
         players[key].name,
         players[key].x + char_jump.width / 2,

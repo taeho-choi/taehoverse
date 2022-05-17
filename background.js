@@ -1,12 +1,6 @@
 export class Background {
-  constructor(stageWidth, stageHeight, width, height) {
-    this.width = width;
-    this.height = height;
-    this.stageHeight = stageHeight;
+  constructor(stageWidth) {
     this.stageWidth = stageWidth;
-
-    this.x = stageWidth / 2 - this.width / 2;
-    this.y = stageHeight - height;
   }
 
   draw(ctx, backgroundImage, character) {

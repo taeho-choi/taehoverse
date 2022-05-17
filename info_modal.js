@@ -16,6 +16,10 @@ export class InfoModal {
   }
 
   onClickCancelInfoModal(infoModal) {
-    infoModal.remove();
+    infoModal.style.display = "none";
+  }
+
+  showInfoModal(infoModal) {
+    infoModal.style.display = "block";
   }
 }
