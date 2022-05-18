@@ -13,7 +13,7 @@ export class DefaultMap {
     ];
   }
 
-  draw(ctx, tiles, taeho, notice, t) {
+  draw(ctx, tiles, taeho, notice, link, t) {
     for (let i = 0; i < this.mapData.length; i++) {
       for (let j = 0; j < this.mapData[i].length; j++) {
         // 타일 지형 그리기
@@ -36,19 +36,19 @@ export class DefaultMap {
             this.drawName(ctx, i, j, "태호버스", "HTML5 Canvas");
           } else if (this.mapData[i][j] == 10) {
             ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
-            this.drawName(ctx, i, j, "EMONG", "React");
+            this.drawName(ctx, i, j, "와이어헌터", "UnrealEngine");
           } else if (this.mapData[i][j] == 11) {
             ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
-            this.drawName(ctx, i, j, "와이어헌터", "UnrealEngine4");
+            this.drawName(ctx, i, j, "개스키", "OpenGL");
           } else if (this.mapData[i][j] == 12) {
             ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
-            this.drawName(ctx, i, j, "개스키", "OpenGL");
+            this.drawName(ctx, i, j, "FollowingCyborgs", "OpenGL");
           } else if (this.mapData[i][j] == 13) {
             ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
-            this.drawName(ctx, i, j, "FollowingCyborgs", "OpenGL");
+            this.drawName(ctx, i, j, "LetsSlicePolygon", "OpenGL");
           } else if (this.mapData[i][j] == 14) {
             ctx.drawImage(tiles[3], j * 160, -100 * i + 100);
-            this.drawName(ctx, i, j, "LetsSlicePloygon", "OpenGL");
+            this.drawName(ctx, i, j, "EMONG", "React");
           }
 
           ctx.drawImage(notice[this.mapData[i][j] - 9], j * 160, -100 * i - 50);
@@ -58,16 +58,28 @@ export class DefaultMap {
         if (this.mapData[i][j] >= 15) {
           if (this.mapData[i][j] == 15) {
             ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
-            ctx.drawImage(taeho[parseInt(t / 700) % 2], j * 160, -100 * i - 50);
-            this.drawName(ctx, i, j, "Website", "");
+            ctx.drawImage(
+              link[this.mapData[i][j] - 15][parseInt(t / 700) % 2],
+              j * 160,
+              -100 * i - 50
+            );
+            this.drawName(ctx, i, j, "링크1", "Website");
           } else if (this.mapData[i][j] == 16) {
             ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
-            ctx.drawImage(taeho[parseInt(t / 700) % 2], j * 160, -100 * i - 50);
-            this.drawName(ctx, i, j, "GitHub", "");
+            ctx.drawImage(
+              link[this.mapData[i][j] - 15][parseInt(t / 700) % 2],
+              j * 160,
+              -100 * i - 50
+            );
+            this.drawName(ctx, i, j, "링크2", "GitHub");
           } else if (this.mapData[i][j] == 17) {
             ctx.drawImage(tiles[0], j * 160, -100 * i + 100);
-            ctx.drawImage(taeho[parseInt(t / 700) % 2], j * 160, -100 * i - 50);
-            this.drawName(ctx, i, j, "Notion", "");
+            ctx.drawImage(
+              link[this.mapData[i][j] - 15][parseInt(t / 700) % 2],
+              j * 160,
+              -100 * i - 50
+            );
+            this.drawName(ctx, i, j, "링크3", "Notion");
           }
         }
       }

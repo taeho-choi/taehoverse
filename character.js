@@ -1,5 +1,6 @@
 let canInteract = 0;
 let infoModal;
+let idleFlag = false;
 
 export class Character {
   constructor(stageWidth, width, height, speed, modal) {
@@ -35,26 +36,28 @@ export class Character {
       if (e.key == "f" && canInteract == 1) {
         infoModal.showInfoModal(infoModal.infoModal);
       } else if (e.key == "f" && canInteract == 2) {
-        window.open("https://taeho-choi.github.io/taeho-choi-portfolio/");
-      } else if (e.key == "f" && canInteract == 3) {
         window.open(
-          "https://scented-handball-29f.notion.site/EMONG-HTML-CSS-JavaScript-React-Firebase-ca486d933dac4e11b1ed97273e7d4567"
+          "https://scented-handball-29f.notion.site/HTML-CSS-JavaScript-Firebase-aebc0a5f684346f9ab6d533c38ca83e5"
         );
-      } else if (e.key == "f" && canInteract == 4) {
+      } else if (e.key == "f" && canInteract == 3) {
         window.open(
           "https://scented-handball-29f.notion.site/C-Unreal-Engine-4-dfd31d06460d44c8b36ee432dcd1b26f"
         );
-      } else if (e.key == "f" && canInteract == 5) {
+      } else if (e.key == "f" && canInteract == 4) {
         window.open(
           "https://scented-handball-29f.notion.site/C-OpenGL-8520875365524dc49bf1ceb4222c01bb"
         );
-      } else if (e.key == "f" && canInteract == 6) {
+      } else if (e.key == "f" && canInteract == 5) {
         window.open(
           "https://scented-handball-29f.notion.site/Following-Cyborgs-C-OpenGL-ba44dade262d4f938bd8a3bd6d3ece08"
         );
-      } else if (e.key == "f" && canInteract == 7) {
+      } else if (e.key == "f" && canInteract == 6) {
         window.open(
           "https://scented-handball-29f.notion.site/Let-s-Slice-Polygon-C-OpenGL-133a1eedfd15482ea75c886068654b6e"
+        );
+      } else if (e.key == "f" && canInteract == 7) {
+        window.open(
+          "https://scented-handball-29f.notion.site/EMONG-HTML-CSS-JavaScript-React-Firebase-ca486d933dac4e11b1ed97273e7d4567"
         );
       } else if (e.key == "f" && canInteract == 8) {
         window.open("https://taeho-choi.github.io/taeho-choi-portfolio/");
@@ -91,8 +94,6 @@ export class Character {
       this.dataChangeFlag = true;
       if (this.x < 2712) {
         this.x += this.vx;
-
-        // test_bgm.play();
       }
       if (!this.flipY) {
         this.flipY = true;
@@ -123,8 +124,6 @@ export class Character {
       this.onPlatform = false;
     }
     if (this.isJumping && this.gravity == 0) {
-      // test_jump.play();
-
       this.isJumping = false;
       this.y -= this.vy;
       this.dataChangeFlag = true;
@@ -284,7 +283,7 @@ export class Character {
     }
 
     if (this.dataChangeFlag) {
-      ///////// 동기화 ////////////////////
+      ///////// 로컬 데이터 Firebase DB에 올리기 ////////////////////
       const playerRef = firebase.database().ref(`players/${playerId}`);
       playerRef.update({
         id: playerId,
@@ -293,7 +292,7 @@ export class Character {
         ani: this.status,
         flipY: this.flipY,
       });
-      /////////////////////////////////////
+      //////////////////////////////////////////////////////////////
       this.dataChangeFlag = false;
     }
 
@@ -307,7 +306,7 @@ export class Character {
     // 중력
     // console.log("gravity: " + this.gravity);
 
-    //맵 데이터
+    // 맵 데이터
     // console.log("mapData: " + mapData);
   }
 }

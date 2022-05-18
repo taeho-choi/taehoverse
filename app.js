@@ -27,7 +27,11 @@ let footer;
 let dataLoaded = false;
 
 function keyDownHandler(e) {
-  if (e.key == 37 || e.key == "ArrowRight" || e.key == "d") {
+  if (e.key == "f" || e.keyCode == 70) {
+    rightPressed = false;
+    leftPressed = false;
+    spacePressed = false;
+  } else if (e.key == 37 || e.key == "ArrowRight" || e.key == "d") {
     if (!chat.chatInputToggle) rightPressed = true;
   } else if (e.key == 39 || e.key == "ArrowLeft" || e.key == "a") {
     if (!chat.chatInputToggle) leftPressed = true;
@@ -66,6 +70,7 @@ let npc_idle_flipped;
 let npc_walk;
 let npc_walk_flipped;
 let tiles;
+let link;
 
 ////////////////////////////////////////////
 ///////         Image Load           ///////
@@ -159,6 +164,15 @@ function copyImageToCanvas() {
         "./img/npc/npc" + (i + 1) + "_walk_flipped" + (j + 1) + ".png";
     }
   }
+
+  link = new Array();
+  for (let i = 0; i < 3; i++) {
+    link[i] = new Array();
+    for (let j = 0; j < 2; j++) {
+      link[i][j] = new Image();
+      link[i][j].src = "./img/link/link" + (i + 1) + "_" + (j + 1) + ".png";
+    }
+  }
 }
 
 class App {
@@ -228,7 +242,7 @@ class App {
 
     this.background.draw(this.ctx, backgroundImage, this.character);
 
-    this.default_map.draw(this.ctx, tiles, taeho, notice, t);
+    this.default_map.draw(this.ctx, tiles, taeho, notice, link, t);
 
     this.npc.draw(
       this.ctx,
