@@ -1,6 +1,5 @@
 let canInteract = 0;
 let infoModal;
-let idleFlag = false;
 
 export class Character {
   constructor(stageWidth, width, height, speed, modal) {

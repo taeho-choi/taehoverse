@@ -24,6 +24,8 @@ let chatBoxTimer = 0;
 
 let footer;
 
+let infoModal;
+
 let dataLoaded = false;
 
 function keyDownHandler(e) {
@@ -32,11 +34,26 @@ function keyDownHandler(e) {
     leftPressed = false;
     spacePressed = false;
   } else if (e.key == 37 || e.key == "ArrowRight" || e.key == "d") {
-    if (!chat.chatInputToggle) rightPressed = true;
+    if (
+      !chat.chatInputToggle &&
+      infoModal.infoModal.style.display == "none" &&
+      footer.changeNicknameModal == undefined
+    )
+      rightPressed = true;
   } else if (e.key == 39 || e.key == "ArrowLeft" || e.key == "a") {
-    if (!chat.chatInputToggle) leftPressed = true;
+    if (
+      !chat.chatInputToggle &&
+      infoModal.infoModal.style.display == "none" &&
+      footer.changeNicknameModal == undefined
+    )
+      leftPressed = true;
   } else if (e.key == " " || e.key == "SpaceBar") {
-    if (!chat.chatInputToggle) spacePressed = true;
+    if (
+      !chat.chatInputToggle &&
+      infoModal.infoModal.style.display == "none" &&
+      footer.changeNicknameModal == undefined
+    )
+      spacePressed = true;
   } else if (e.key == 13 || e.key == "Enter") {
     enterPressed = true;
     rightPressed = false;
@@ -47,11 +64,26 @@ function keyDownHandler(e) {
 
 function keyUpHandler(e) {
   if (e.key == 37 || e.key == "ArrowRight" || e.key == "d") {
-    if (!chat.chatInputToggle) rightPressed = false;
+    if (
+      !chat.chatInputToggle &&
+      infoModal.infoModal.style.display == "none" &&
+      footer.changeNicknameModal == undefined
+    )
+      rightPressed = false;
   } else if (e.key == 39 || e.key == "ArrowLeft" || e.key == "a") {
-    if (!chat.chatInputToggle) leftPressed = false;
+    if (
+      !chat.chatInputToggle &&
+      infoModal.infoModal.style.display == "none" &&
+      footer.changeNicknameModal == undefined
+    )
+      leftPressed = false;
   } else if (e.key == " " || e.key == "SpaceBar") {
-    if (!chat.chatInputToggle) spacePressed = false;
+    if (
+      !chat.chatInputToggle &&
+      infoModal.infoModal.style.display == "none" &&
+      footer.changeNicknameModal == undefined
+    )
+      spacePressed = false;
   }
 }
 
@@ -189,8 +221,8 @@ class App {
 
     chat = new Chat();
     footer = new Footer();
-    this.infoModal = new InfoModal();
-    this.character = new Character(2560, 60, 100, 3, this.infoModal);
+    infoModal = new InfoModal();
+    this.character = new Character(2560, 60, 100, 3, infoModal);
     this.background = new Background(2560);
     this.default_map = new DefaultMap();
     this.npc = new Npc();
